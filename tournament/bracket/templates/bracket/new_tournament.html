@@ -1,0 +1,26 @@
+{% extends "bracket/layout.html" %}
+
+{% block body %}
+<figure class = 'bracket'>
+    <form method ='POST'>
+        {% csrf_token %}
+        <figcaption><h1>Create new tournament</h1></figcaption>
+        <figcaption><input type = 'text' placeholder="Bracket name " name = 'bracket_name'></figcaption>
+        <figcaption><input type = 'text' placeholder="Image URL" name = 'bracket_img'></figcaption>
+        <figcaption>
+              <label for="stages">Stage</label>
+                <select id="stages" name="stages">
+                    <option value="1/128">1/128</option>
+                    <option value = "1/64">1/64</option>
+                    <option value="1/32" selected>1/32</option>
+                    <option value="1/16">1/16</option>
+                    <option value="1/8" >1/8</option>
+                    <option value="1/4">1/4</option>
+                </select>
+                <input type="submit" name = 'stage'>
+        </figcaption>
+
+
+    </form>
+</figure>
+{% endblock %}

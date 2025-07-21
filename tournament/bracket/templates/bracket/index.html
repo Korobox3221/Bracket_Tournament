@@ -1,0 +1,11 @@
+{% extends "bracket/layout.html" %}
+{% block body %}
+{% for bracket in brackets %}
+<figure class = brack>
+    <figcaption>{{bracket.amount_of_stages}}</figcaption>
+    <figcaption>{{bracket.bracket_name}}</figcaption>
+    <figcaption><img src = '{{bracket.img}}' class = brack_img></figcaption>
+    <figcaption>{{bracket.bracket_creator}}</figcaption>
+</figure>
+{% endfor %}
+{% endblock %}
