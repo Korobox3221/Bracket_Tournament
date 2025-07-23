@@ -6,5 +6,6 @@ urlpatterns = [
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"), 
-    path("new_tournament", views.new_tournament, name = "new_tournament")
+    path("new_tournament", views.new_tournament, name = "new_tournament"),
+    path("bracket/<int:id>", views.bracket_view, name = "bracket_view")
     ]

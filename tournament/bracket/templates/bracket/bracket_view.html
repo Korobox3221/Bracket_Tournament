@@ -1,0 +1,23 @@
+{% extends "bracket/layout.html"%}
+{% block body %}
+
+
+<h1 style = 'text-align:center;'>{{stage.bracket_name}}</h1>
+<div class="bracket-container">
+    <div style= 'background-image:url("static/bracket/images/semi-final.png");' class = "round">
+        <img src = '/tournament/bracket/static/bracket/images/semi-final.png'>
+        <h3>Round 1/{{final}}</h3>
+       
+        <div class="matches">
+             {% for object in objects %}
+            <div class="match">
+                <div class="team ">
+                    <h1>{{object.obj_name}}</h1><img style = 'max-width: 200px;' src = '{{object.img}}'>
+                </div>   
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

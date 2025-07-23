@@ -1,10 +1,46 @@
-.bracket{
-    text-align:center
-}
+
 .brack{
         border: 1px solid #ddd;
         border-radius: 4px;
 }
 .brack_img{
     max-width: 200px;
+}
+
+
+
+.bracket-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+}
+
+.round {
+    min-width: 200px;
+    margin-right: 40px;
+}
+
+.match {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.team {
+    padding: 5px;
+    margin: 5px 0;
+}
+
+.winner {
+    font-weight: bold;
+    color: green;
+}
+
+.vs {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin: 5px 0;
 }

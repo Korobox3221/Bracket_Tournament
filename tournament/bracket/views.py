@@ -72,7 +72,30 @@ def new_tournament(request):
         bracket_name = request.POST['bracket_name']
         amount_of_stages = request.POST['stages']
         bracket_creator = request.user
+        participant_names = request.POST.getlist('participants')
+        participant_urls = request.POST.getlist('participant_urls')
         br = Bracket(img = img, bracket_name = bracket_name, amount_of_stages = amount_of_stages, bracket_creator = bracket_creator)
         br.save()
+        br_name = Bracket.objects.get(bracket_name = bracket_name)
+        for i, (name, url) in enumerate(zip(participant_names, participant_urls)):
+            Bracket_object.objects.create(
+                obj_name = name,
+                img = url,
+                stage = amount_of_stages,
+                bracket_name = br_name
+
+                )
+        return HttpResponseRedirect("/")
 
     return render(request, "bracket/new_tournament.html")
+
+
+def bracket_view(request, id):
+    stage = Bracket.objects.get(id = id)
+    final = int(stage.amount_of_stages/2)
+    objects = Bracket_object.objects.filter(bracket_name = stage)
+    return render(request, "bracket/bracket_view.html",
+                  {'stage': stage,
+                   'id':id,
+                   'objects': objects,
+                   'final':final})
