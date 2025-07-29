@@ -7,5 +7,7 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"), 
     path("new_tournament", views.new_tournament, name = "new_tournament"),
-    path("bracket/<int:id>", views.bracket_view, name = "bracket_view")
+    path("bracket/<int:id>", views.bracket_view, name = "bracket_view"),
+    path("error/<str:message>", views.error, name = 'error'),
+    path("object/<str:id>", views.object_api, name = 'object')
     ]

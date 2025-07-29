@@ -2,7 +2,7 @@
 {% block body %}
 {% for bracket in brackets %}
 <a href = "/bracket/{{bracket.id}}"><figure class = brack>
-    <figcaption>1/{{bracket.amount_of_stages}}</figcaption>
+    <figcaption>1/{{bracket.amount_of_participants}}</figcaption>
     <figcaption>{{bracket.bracket_name}}</figcaption>
     <figcaption><img src = '{{bracket.img}}' class = brack_img ></figcaption>
     <figcaption>{{bracket.bracket_creator}}</figcaption>
