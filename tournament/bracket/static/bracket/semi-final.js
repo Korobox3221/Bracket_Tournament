@@ -105,28 +105,45 @@ function placeFinalist() {
         ? document.getElementById('left-pick') 
         : document.getElementById('right-pick');
     
+    // Clone and modify the structure
     const clone = selectedParticipant.cloneNode(true);
     clone.classList.add('finalist-clone');
     
-    // Position clone near the pick button
-    const rect = finalPosition.getBoundingClientRect();
-    clone.style.position = 'absolute';
-    clone.style.top = `${rect.top + window.scrollY}px`;
-    clone.style.left = `${rect.left + window.scrollX}px`;
-    clone.style.zIndex = '20';
+    // Remove any conflicting inline styles from the clone
+    clone.style.cssText = `
+        position: absolute;
+        top: 35.5%;
+        left: ${currentSelectionMode === 'semi-left' ? '32.4%' : '61.7%'};
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        width: 200px;  /* Set your desired width */
+        height: 210px;  /* Maintain aspect ratio */
+    `;
     
-    document.body.appendChild(clone);
+    // Modify the inner image dimensions
+    const img = clone.querySelector('img');
+    if (img) {
+        img.style.width = '155px';
+        img.style.height = '155px';
+     
+    }
     
-    // Mark as selected
+    // Modify the participant box if it exists
+    const participantBox = clone.querySelector('.participant-box');
+    if (participantBox) {
+        participantBox.style.width = '210px';
+        participantBox.style.height = '200px';
+    }
+    
+    document.querySelector('.bracket-wrapper').appendChild(clone);
+    
+    // Rest of your existing code...
     selectedFinalists.push(selectedParticipant.dataset.id);
     selectedParticipant.classList.add('finalist-original');
-    
-    // Hide the pick button if both are done
     finalPosition.style.display = 'none';
-    const obj_id = selectedParticipant.dataset.id
-    console.log(obj_id)
-    save_finalists(obj_id)
-    // Show final pick button if two finalists selected
+    const obj_id = selectedParticipant.dataset.id;
+    save_finalists(obj_id);
+    
     if (selectedFinalists.length === 2) {
         document.getElementById('final-pick').hidden = false;
     }
@@ -140,44 +157,31 @@ function placeChampion() {
     const originalBox = selectedParticipant.querySelector('.participant-box');
     const img = originalBox.querySelector('img').cloneNode(true);
     const name = selectedParticipant.querySelector('.obj_name').cloneNode(true);
-    
     // Create new minimal champion container
+    
+    img.style.width = '150px';
+    img.style.height = '150px';
+    name.style.fontSize = '17px'
     const champion = document.createElement('div');
     champion.classList.add('champion');
     
     // Create simple structure for name and image
     const content = document.createElement('div');
-    content.style.display = 'flex';
-    content.style.flexDirection = 'column';
-    content.style.alignItems = 'center';
-    content.style.gap = '8px'; // Space between name and image
-    
-    // Style the name element
-    name.style.margin = '0';
-    name.style.fontSize = '18px';
-    name.style.fontWeight = 'bold';
-    name.style.color = '#333'; // Default dark color
-    
-    // Style the image
-    img.style.width = '180px';
-    img.style.height = '180px';
-    img.style.objectFit = 'cover';
-    img.style.borderRadius = '4px'; // Optional slight rounding
+    // Space between name and image
+
     
     // Build the structure
-    content.appendChild(name);
-    content.appendChild(img);
-    champion.appendChild(content);
-    
-    // Position the champion
+    champion.appendChild(name);
+    champion.appendChild(img);
+    champion.style.top = '69.5%';
+    champion.style.left = '47.7%';
+    champion.style.position = 'fixed';
     champion.style.position = 'absolute';
-    champion.style.top = '50%';
-    champion.style.left = '50%';
     champion.style.transform = 'translate(-50%, -50%)';
-    champion.style.zIndex = '100';
-    champion.style.width = "300px";
-    
-    document.body.appendChild(champion);
+    champion.style.zIndex = '1000';
+
+
+    document.querySelector('.bracket-wrapper').appendChild(champion);
     document.getElementById('final-pick').hidden = true;
     const obj_id = selectedParticipant.dataset.id
     save_winner(obj_id)

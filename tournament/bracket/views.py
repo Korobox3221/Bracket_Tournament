@@ -70,10 +70,10 @@ def register(request):
         return render(request, "bracket/register.html")
     
 def new_tournament(request):
-    top_left_semi = (16.0, 11.0, True)
-    top_right_semi = (16.5, -2.0, False)
-    bot_right_semi = (50.7, -2.0, False)
-    bot_left_semi= (51.0, 13.5, True)
+    top_left_semi = (26.4, True)
+    top_right_semi = (26.4,  False)
+    bot_right_semi = (54.0, False)
+    bot_left_semi= (54.0, True)
     semi_final = 'semi-final'
     if request.method == 'POST':
         img = request.POST['bracket_img']
@@ -87,10 +87,10 @@ def new_tournament(request):
         br_name = Bracket.objects.get(bracket_name = bracket_name)
         positions = [
             # (slot_row, slot_col, is_left_side)
-            (1, 1, True),  # Top left semifinal
-            (2, 1, True),  # Bottom left semifinal
-            (1, 2, False), # Top right semifinal
-            (2, 2, False)  # Bottom right semifinal
+            (1,  True),  # Top left semifinal
+            (2,  True),  # Bottom left semifinal
+            (1,  False), # Top right semifinal
+            (2,  False)  # Bottom right semifinal
         ]
         if len(participant_names)==4:
             positions[0] = top_left_semi
@@ -99,16 +99,16 @@ def new_tournament(request):
             positions[3] = bot_left_semi
             
         for i, (name, url) in enumerate(zip(participant_names, participant_urls)):
-            slot_row, slot_col, is_left_side = positions[i]
-            Bracket_object.objects.create(
+            slot_row_semi, is_left_side = positions[i]
+            bracket_obj = Bracket_object.objects.create(
                 obj_name = name,
                 img = url,
                 current_stage = semi_final,
                 bracket_name = br_name,
-                slot_row = slot_row,
-                slot_col = slot_col,
+                slot_row_semi = slot_row_semi,
                 is_left_side = is_left_side
                 )
+            Participant_stages.objects.create(bracket_name = br_name, obj_name = bracket_obj, semi_final= True)
         return HttpResponseRedirect("/")
 
     return render(request, "bracket/new_tournament.html")

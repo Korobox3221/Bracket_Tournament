@@ -95,7 +95,7 @@ function placeChampion() {
     // Get the finalist's data
     const img = selectedParticipant.querySelector('img');
     const name = selectedParticipant.querySelector('.obj_name, .finalist-name');
-    
+    name.style.fontSize = '17px'
     
     if (!img || !name) {
         console.error('Selected finalist is missing required elements');
@@ -107,9 +107,7 @@ function placeChampion() {
     champion.className = 'champion';
     
     // Create content structure
-    const content = document.createElement('div');
-    content.className = 'champion-content';
-    
+
     // Clone and style the name
     const nameClone = name.cloneNode(true);
     nameClone.className = 'champion-name';
@@ -119,18 +117,19 @@ function placeChampion() {
     imgClone.className = 'champion-image';
     
     // Build the structure
-    content.appendChild(nameClone);
-    content.appendChild(imgClone);
-    champion.appendChild(content);
+    champion.appendChild(nameClone);
+    champion.appendChild(imgClone);
     
     // Position the champion
+    champion.style.top = '69.5%';
+    champion.style.left = '47.7%';
+    champion.style.position = 'fixed';
     champion.style.position = 'absolute';
-    champion.style.top = '50%';
-    champion.style.left = '50%';
     champion.style.transform = 'translate(-50%, -50%)';
-    champion.style.zIndex = '1000'; // Higher than everything else
+    champion.style.zIndex = '1000';
+ // Higher than everything else
     
-    document.body.appendChild(champion);
+    document.querySelector('.bracket-wrapper').appendChild(champion);
 
 
     

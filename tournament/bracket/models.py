@@ -26,8 +26,8 @@ class Bracket_object(models.Model):
     current_stage = models.CharField(max_length=20, default='semi-final')
     bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True, related_name = 'brack_name')
     img = models.CharField(max_length = 1000)
-    slot_row = models.FloatField(default=1)  # Vertical position (1-8)
-    slot_col = models.FloatField(default=1)  # Horizontal position (1-4)
+    slot_row_semi = models.FloatField(default=1)
+    slot_row_final = models.FloatField(default=1)  # Vertical position (1-8)
     is_left_side = models.BooleanField(default=True)
     def __str__(self):
         return f"{self.bracket_name}: {self.obj_name}"

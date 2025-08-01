@@ -16,20 +16,22 @@ body, html {
 </style>
 
 {% if not finalists %}
-<div class="button-container">
-    <button class="pick-button" id="left-pick">Pick</button>
-    <button class="pick-button" id="right-pick">Pick</button>
-    <button hidden class="pick-button" id="final-pick">Pick</button>
-</div>
+
 
 <div class="bracket-wrapper">
     <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
     
+    <div class="button-container">
+        <button class="pick-button" id="left-pick">Pick</button>
+        <button class="pick-button" id="right-pick">Pick</button>
+        <button hidden class="pick-button" id="final-pick">Pick</button>
+    </div>
+    
     {% for obj in semi_finalists %}
     <div class="participant-slot" 
          data-id="{{ obj.id }}"
-         style="top: {{ obj.slot_row }}%; 
-                left: {{ obj.is_left_side|yesno:'20,80' }}%;">
+         style="top: {{ obj.slot_row_semi }}%; 
+                left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">
         <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
         <div class="participant-box">
             <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
@@ -40,21 +42,21 @@ body, html {
 
 {% else %}
     {% if not winner %}
-    <div class="button-container">
-        <button hidden class="pick-button" id="left-pick">Pick</button>
-        <button hidden class="pick-button" id="right-pick">Pick</button>
-        <button class="pick-button" id="final-pick">Pick</button>
-    </div>
-
     <div class="bracket-wrapper">
+        <div class="button-container">
+            <button hidden class="pick-button" id="left-pick">Pick</button>
+            <button hidden class="pick-button" id="right-pick">Pick</button>
+            <button class="pick-button" id="final-pick">Pick</button>
+        </div>
+
         <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
         
         <!-- Original Participants (hidden or shown as needed) -->
         {% for obj in semi_finalists %}
         <div class="participant-slot original-participant"
             data-id="{{ obj.id }}"
-            style="top: {{ obj.slot_row }}%; 
-                    left: {{ obj.is_left_side|yesno:'20,80' }}%;>  <!-- Hide original participants in final stage -->
+            style="top: {{ obj.slot_row_semi}}%; 
+                    left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">  <!-- Hide original participants in final stage -->
             <span class="obj_name">{{ obj.obj_name }}</span>
             <div class="participant-box">
                 <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
@@ -66,8 +68,8 @@ body, html {
         {% for finalist in finalists %}
         <div class="finalist-slot"
             data-id="{{ finalist.id }}"
-            style="top: 30%; 
-                    left: {{ forloop.counter0|yesno:'40,60' }}%;">
+            style="top: 36.3%; 
+                    left: {{ finalist.is_left_side|yesno:'32.4,61.7' }}%;">
             <span class="finalist-name">{{ finalist.obj_name }}</span>
             <div class="finalist-box">
                 <img src="{{ finalist.img }}" alt="{{ finalist.obj_name }}">
@@ -75,22 +77,23 @@ body, html {
         </div>
         {% endfor %}
     </div>
+
         {% else %}
+    <div class="bracket-wrapper">
         <div class="button-container">
         <button hidden class="pick-button" id="left-pick">Pick</button>
         <button hidden class="pick-button" id="right-pick">Pick</button>
         <button hidden class="pick-button" id="final-pick">Pick</button>
     </div>
 
-    <div class="bracket-wrapper">
         <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
         
         <!-- Original Participants (hidden or shown as needed) -->
         {% for obj in semi_finalists %}
         <div class="participant-slot original-participant"
             data-id="{{ obj.id }}"
-            style="top: {{ obj.slot_row }}%; 
-                    left: {{ obj.is_left_side|yesno:'20,80' }}%;>  <!-- Hide original participants in final stage -->
+            style="top: {{ obj.slot_row_semi}}%; 
+                    left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">  <!-- Hide original participants in final stage -->
             <span class="obj_name">{{ obj.obj_name }}</span>
             <div class="participant-box">
                 <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
@@ -102,23 +105,23 @@ body, html {
         {% for finalist in finalists %}
         <div class="finalist-slot"
             data-id="{{ finalist.id }}"
-            style="top: 30%; 
-                    left: {{ forloop.counter0|yesno:'40,60' }}%;">
+            style="top: 36.3%; 
+                    left: {{ finalist.is_left_side|yesno:'32.4,61.7' }}%;">
             <span class="finalist-name">{{ finalist.obj_name }}</span>
             <div class="finalist-box">
                 <img src="{{ finalist.img }}" alt="{{ finalist.obj_name }}">
             </div>
         </div>
         {% endfor %}
-    </div>
         <div class="participant-slot original-participant"
             data-id="{{ winner.id }}"
-            style="top: 30%; left: 30%;"> 
-            <div class="champion">
+            style="top: 69.5%; left: 56%;"> 
+            <div class="champion_winner">
                 <span class="obj_name">{{ winner.obj_name }}</span>
                 <img src="{{ winner.img }}" alt="{{ winner.obj_name }}">
             </div>
         </div>
+    </div>
     {% endif %}
 {% endif %}
 

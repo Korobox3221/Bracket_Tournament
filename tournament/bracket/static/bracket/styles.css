@@ -20,6 +20,9 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    overflow: hidden; 
+    font-weight: bold;
+    
 }
 
 .bracket-bg {
@@ -35,6 +38,8 @@
     position: absolute;
     transform: translate(-50%, -50%);
     width: 200px;
+    pointer-events: auto; /* Re-enable clicks for buttons */
+    transform: translate(-50%, -50%); 
 }
 
 .participant-box {
@@ -47,11 +52,12 @@
     align-items: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
-    width: 150px;
-    height: 145px;
+    width: 165px;
+    height: 165px;
+    
 }
 
-.participant-box:hover {
+.pick-button:hover {
     transform: scale(1.05);
     z-index: 10;
 }
@@ -71,7 +77,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
-    margin-bottom: 5px;
     font-size: 15px;
 }
 
@@ -90,13 +95,13 @@
     }
     
     #left-pick {
-        bottom: 63%;
-        left: 39%;
+        bottom: 60%;
+        left: 29.5%;
     }
     
     #right-pick {
-        bottom: 63%;
-        right: 41.5%;
+        bottom: 60%;
+        right: 34.5%;
     }
     
     /* Selection modal */
@@ -154,13 +159,21 @@
         cursor: pointer;
     }
 .participant-slot.finalist {
+    pointer-events: auto; /* Re-enable clicks for buttons */
+    transform: translate(-50%, -50%); 
     visibility: hidden;
+    width: 210px;
+    height: 200px;
 }
 
 /* Style for finalist clones */
 .participant-slot.finalist.clone {
+    pointer-events: auto; /* Re-enable clicks for buttons */
+    transform: translate(-50%, -50%); 
     visibility: visible;
     z-index: 20;
+    width: 210px;
+    height: 200px;
 }
 
 .final-button{
@@ -180,7 +193,8 @@
 
 .champion {
     position: fixed;
-    width: 180px;
+    width: 260px;
+    height: 200px;
     background: white;
     border: 3px solid gold;
     border-radius: 10px;
@@ -193,10 +207,9 @@
 }
 
 .champion img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
-    margin-bottom: 5px;
     border: 2px solid white;
     box-sizing: border-box;
 }
@@ -205,8 +218,8 @@
 #final-pick {
     position: absolute;
     /* Adjust these to match your bracket's center */
-    bottom: 25%; 
-    left: 50%;
+    bottom: 28%; 
+    left: 48%;
     transform: translateX(-50%);
     z-index: 50;
     width: 100px;
@@ -229,20 +242,45 @@
     align-items: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
-    width: 150px;
-    height: 145px;
+    width: 210px;
+    height: 200px;
 }
 
-.finalist-box:hover {
-    transform: scale(1.05);
-    z-index: 10;
-}
+
 
 .finalist-box img {
-    width: 120px;
-    height: 120px;
+    width: 155px;
+    height: 155px;
     object-fit: cover;
     margin-bottom: 5px;
     border: 2px solid white;
     box-sizing: border-box;
+}
+
+.champion_winner{
+    position: fixed;
+    width: 260px;
+    height: 200px;
+    background: white;
+    border: 3px solid gold;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+    z-index: 100;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+
+.champion_winner img{
+
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid white;
+    box-sizing: border-box;
+}
+.champion_winner span{
+    font-size: 17px;
 }
