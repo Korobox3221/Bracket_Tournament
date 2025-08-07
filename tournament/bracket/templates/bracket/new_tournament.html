@@ -1,44 +1,104 @@
 {% extends "bracket/layout.html" %}
 
 {% block body %}
-<div class='bracket'>
-    <form method='POST'>
+<div class='tournament-creator'>
+    <form method='POST' class='tournament-form'>
         {% csrf_token %}
-        <figure>
-            <figcaption><h1>Create new tournament</h1></figcaption>
-            <figcaption><input type='text' placeholder="Bracket name" name='bracket_name' required></figcaption>
-            <figcaption><input type='text' placeholder="Image URL" name='bracket_img'></figcaption>
-            <figcaption>
-                <label for="stages">Amount of participants</label>
-                <select id="stages" name="stages">
-                    <option value="128">128</option>
-                    <option value="64">64</option>
-                    <option value="32" selected>32</option>
-                    <option value="16">16</option>
-                    <option value="8">8</option>
-                    <option value="4">4</option>
-                </select>
-            </figcaption>
-            
-            <div class="participants-wrapper">
-                <div id="participants-container">
-                    <!-- Participants will be added here -->
+        <div class='form-header'>
+            <h1>Create New Tournament</h1>
+            <p class='subtitle'>Fill out the details below to start your competition</p>
+        </div>
+        
+        <div class='form-grid'>
+            <!-- Bracket Info Section -->
+            <div class='form-section'>
+                <h2 class='section-title'>Bracket Details</h2>
+                <div class='input-group'>
+                    <label for="bracket_name">Tournament Name</label>
+                    <input type='text' id="bracket_name" name='bracket_name' placeholder="Best CS2 player tournament" required>
                 </div>
-                <div class="add-participant">
-                    <figcaption class='btn_caption'>
-                        <button type="button" class='add'>
-                            <img src='https://www.svgrepo.com/show/170952/add-button.svg'>
+                <div class='input-group'>
+                    <label for="bracket_img">Cover Image URL</label>
+                    <input type='text' id="bracket_img" name='bracket_img' placeholder="https://example.com/tournament.jpg">
+                    <p class='input-hint'>Optional banner image for your tournament</p>
+                </div>
+                <div class='input-group'>
+                    <label for="stages">Tournament Size</label>
+                    <select id="stages" name="stages" class='select-dropdown'>
+                        <option value="4" selected>4 Participants</option>
+                        <option value="8">8 Participants</option>
+                        <option value="16">16 Participants</option>
+                        <option value="32">32 Participants</option>
+                        <option value="64">64 Participants</option>
+                        <option value="128">128 Participants</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Participants Section -->
+            <div class='form-section'>
+                <h2 class='section-title'>Participants</h2>
+                <div class='upload-card'>
+                    <div class='upload-header'>
+                        <h3>Import Participant List</h3>
+                        <button type='button' id="json-upload-btn" class='upload-button'>
+                            <svg class='upload-icon' viewBox="0 0 24 24">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                            </svg>
+                            Upload JSON/CSV
                         </button>
-                        <p>Add participant</p>
-                    </figcaption>
+                        <input type="file" id="json-file-input" accept=".json,.csv" style="display: none;">
+                    </div>
+                    
+                    <div id="participants-container" class='participants-list'>
+                        <div class='empty-state'>
+                            <img src='https://www.svgrepo.com/show/346699/tournament.svg' class='empty-icon'>
+                            <p>No participants added yet</p>
+                            <p class='small-text'>Upload a JSON/CSV file or use the button above</p>
+                        </div>
+                    </div>
+                    
+                    <div id="json-preview" class='upload-feedback'></div>
                 </div>
             </div>
-            
-            <div id="submit-container" style="display: none;">
-                <input type="submit" value="Create Tournament">
-            </div>
-        </figure>
+        </div>
+        
+        <div id="submit-container" class='submit-section'>
+            <button type="submit" class='create-button' disabled>
+                Create Tournament
+                <svg class='button-icon' viewBox="0 0 24 24">
+                    <path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
+                </svg>
+            </button>
+        </div>
     </form>
+    
+    <div class='format-help'>
+        <button type='button' class='help-button'>
+            <svg class='help-icon' viewBox="0 0 24 24">
+                <path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+            </svg>
+            File Format Help
+        </button>
+        <div class='help-content'>
+            <h3>JSON/CSV Format Requirements</h3>
+            <div class='format-example'>
+                <pre>[
+  {
+    "name": "Team Alpha",
+    "imageUrl": "https://example.com/team1.jpg",
+    "youtubeUrl": "https://youtube.com/team1"
+  },
+  {
+    "name": "Team Bravo",
+    "imageUrl": "https://example.com/team2.jpg",
+    "youtubeUrl": "https://youtube.com/team2"
+  }
+]</pre>
+        </div>
+            <p>Fields required: <code>name</code>, <code>imageUrl</code> and <code>youtubeUrl</code> </p>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -57,6 +117,7 @@
     }
     
     #participants-container {
+        margin-top: 10px;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -132,106 +193,523 @@
         cursor: pointer;
         font-size: 16px;
     }
+    .json_container {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        background: #f8f9fa;
+        padding: 0 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border-left: 3px solid #4CAF50;
+    }
+
+    .json_container.show {
+        max-height: 200px; /* Adjust based on your content */
+        opacity: 1;
+        padding: 15px;
+    }
+
+    .json_container p {
+        margin: 0;
+        color: #333;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* Add some styling for your button */
+    .json_info {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin: 10px 0;
+    }
+
+    .json_info:hover {
+        background: #45a049;
+    }
+    .upload-container {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+#json-upload-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+#json-upload-btn:hover {
+    background: #45a049;
+}
+
+    .participant-json {
+        margin: 10px 0;
+        padding: 10px;
+        background: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .participant-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .participant-info img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .error {
+        color: #d9534f;
+        font-weight: bold;
+
+    }
+
+
+
+    .tournament-creator {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.form-header h1 {
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+/* Form Layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Sections */
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    color: #34495e;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f3f5;
+}
+
+/* Input Styles */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.input-group input,
+.select-dropdown {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.input-group input:focus,
+.select-dropdown:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+}
+
+.input-hint {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-top: 0.3rem;
+}
+
+/* Upload Card */
+.upload-card {
+    border: 1px dashed #bdc3c7;
+    border-radius: 10px;
+    padding: 1.5rem;
+    background: #f8fafc;
+}
+
+.upload-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.upload-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.upload-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-button:hover {
+    background: #2980b9;
+}
+
+.upload-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+/* Participants List */
+.participants-list {
+    min-height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+}
+
+.empty-icon {
+    width: 60px;
+    height: 60px;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+}
+
+.small-text {
+    font-size: 0.9rem;
+}
+
+.participant-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.participant-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+}
+
+.participant-name {
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.video-link {
+    color: #e74c3c;
+    text-decoration: none;
+}
+
+/* Submit Section */
+.submit-section {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ecf0f1;
+}
+
+.create-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.create-button:hover {
+    background: #27ae60;
+}
+
+.create-button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.button-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+/* Help Section */
+.format-help {
+    margin-top: 3rem;
+}
+
+.help-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #3498db;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.help-icon {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.help-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.help-content.show {
+    max-height: 500px;
+}
+
+.format-example {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+}
+
+.format-example pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #2c3e50;
+}
+
+/* Feedback Messages */
+.upload-feedback {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+}
+
+.upload-feedback p {
+    margin: 0;
+}
+
+.error {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
 </style>
 
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const addButton = document.querySelector('.add');
-        const container = document.getElementById('participants-container');
-        const submitContainer = document.getElementById('submit-container');
-        const participantSelect = document.getElementById('stages');
-        
-        let requiredParticipants = parseInt(participantSelect.value);
-        
-        // Update required participants when selection changes
-        participantSelect.addEventListener('change', function() {
-            requiredParticipants = parseInt(this.value);
-            checkSubmitButton();
-        });
-        
-        addButton.addEventListener('click', function() {
-            if (container.children.length >= requiredParticipants) {
-                alert(`Maximum ${requiredParticipants} participants allowed`);
-                return;
-            }
-            
-            const participantId = Date.now(); // Unique ID for each participant
-            
-            const participantItem = document.createElement('div');
-            participantItem.className = 'participant-item';
-            participantItem.innerHTML = `
-                <input type="text" placeholder="Participant name" name="participants" required>
-                <input type="text" placeholder="Image URL" name="participant_urls" class="url-input">
-                <button type="button" class="apply">Apply</button>
-                <button type="button" class="remove">×</button>
-                <img class="participant-img" src="" style="display: none;">
-            `;
-            
-            container.insertBefore(participantItem, container.firstChild);
-            
-            // Apply button functionality
-            participantItem.querySelector('.apply').addEventListener('click', function() {
-                const urlInput = participantItem.querySelector('.url-input');
-                const imgElement = participantItem.querySelector('.participant-img');
-                
-                if (urlInput.value) {
-                    imgElement.src = urlInput.value;
-                    imgElement.style.display = 'block';
-                    urlInput.style.display = 'none';
-                    this.style.display = 'none';
-                }
-            });
-            
-            // Remove button functionality
-            participantItem.querySelector('.remove').addEventListener('click', function() {
-                container.removeChild(participantItem);
-                checkSubmitButton();
-            });
-            
-            checkSubmitButton();
-        });
-        
-        function checkSubmitButton() {
-            // Show submit button only when we have all required participants
-            if (container.children.length === requiredParticipants) {
-                let allFilled = true;
-                const inputs = container.querySelectorAll('input[type="text"]');
-                
-                inputs.forEach(input => {
-                    if (!input.value) allFilled = false;
-                });
-                
-                submitContainer.style.display = allFilled ? 'block' : 'none';
-            } else {
-                submitContainer.style.display = 'none';
-            }
-        }
-        
-        // Check inputs as they're filled
-        container.addEventListener('input', function(e) {
-            if (e.target.tagName === 'INPUT') {
-                checkSubmitButton();
-            }
-        });
-    document.querySelector('form').addEventListener('submit', function(e) {
-    // Verify all participants are filled
-    const inputs = document.querySelectorAll('#participants-container input[type="text"]');
-    for (let input of inputs) {
-        if (!input.value) {
-            e.preventDefault();
-            alert('Please fill all participant fields');
-            return;
-        }
-    }
+document.addEventListener('DOMContentLoaded', function() {
+    const addButton = document.querySelector('.add');
+    const participantsContainer  = document.getElementById('participants-container');
+    const submitContainer = document.getElementById('submit-container');
+    const participantSelect = document.getElementById('stages');
+    const json_btn = document.querySelector('.json_info');
+    const json_container = document.querySelector('.json_container');
+    const jsonUploadBtn = document.getElementById('json-upload-btn');
+    const jsonFileInput = document.getElementById('json-file-input');
+    const jsonPreview = document.getElementById('json-preview');
+    let counter = 0;
+        const helpButton = document.querySelector('.help-button');
+    const helpContent = document.querySelector('.help-content');
     
-    // Verify we have the correct number of participants
-    const required = parseInt(document.getElementById('stages').value);
-    if (document.querySelectorAll('.participant-item').length !== required) {
-        e.preventDefault();
-        alert(`Please add exactly ${required} participants`);
+    helpButton.addEventListener('click', function() {
+        helpContent.classList.toggle('show');
+    });
+    // File upload handling (keep your existing JS logic)
+
+    
+    participantsContainer.innerHTML = `<p> Put JSON or CSV file with ${participantSelect.value} participants </p>`;
+    
+    participantSelect.addEventListener('change', function(){
+        participantsContainer.innerHTML = `<p> Put JSON or CSV file with ${participantSelect.value} participants </p>`;
+        console.log(participantSelect.value);
+    });
+
+
+
+
+    jsonUploadBtn.addEventListener('click', function() {
+        jsonFileInput.click();
+    });
+
+    // Handle file selection
+    jsonFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            try {
+                const jsonData = JSON.parse(e.target.result);
+                processJsonData(jsonData);
+            } catch (error) {
+                showError("Invalid JSON file format");
+                console.error("JSON parsing error:", error);
+            }
+        };
+        
+        reader.onerror = function() {
+            showError("Error reading file");
+        };
+        
+        reader.readAsText(file);
+    });
+
+function processJsonData(data) {
+    // Clear previous content
+    participantsContainer.innerHTML = '';
+    
+    // Create hidden inputs container
+    const hiddenInputs = document.createElement('div');
+    hiddenInputs.style.display = 'none';
+    
+    // Validate JSON structure
+    if (!Array.isArray(data)) {
+        showError("JSON must contain an array of participants");
         return;
     }
-});
+
+    // Process each participant
+    data.forEach((participant, index) => {
+        if (!participant.name || !participant.imageUrl) {
+            console.warn(`Participant ${index} missing required fields`);
+            return;
+        }
+
+        // Create participant element
+        const participantDiv = document.createElement('div');
+        participantDiv.className = 'participant-json';
+        participantDiv.innerHTML = `
+            <div class="participant-info">
+                <img src="${participant.imageUrl}">
+                <span>${participant.name}</span>
+                ${participant.youtubeUrl ? 
+                  `<a href="${participant.youtubeUrl}" target="_blank">🎥</a>` : ''}
+            </div>
+        `;
+        participantsContainer.appendChild(participantDiv);
+        
+        // Create hidden inputs for form submission
+        hiddenInputs.innerHTML += `
+            <input type="hidden" name="participants" value="${participant.name}">
+            <input type="hidden" id = 'stages_input' name="stages_input" value = ${parseInt(participantSelect.value)}>
+            <input type="hidden" name="participant_urls" value="${participant.imageUrl}">
+            ${participant.youtubeUrl ? 
+              `<input type="hidden" name="participant_video_urls" value="${participant.youtubeUrl}">` : ''}
+        `;
     });
+
+    // Add hidden inputs to form
+    participantsContainer.appendChild(hiddenInputs);
+    
+    // Update UI
+    jsonPreview.innerHTML = `<p>✅ Successfully loaded ${data.length} participants</p>`;
+    validateParticipantCount(data.length);
+}
+
+    function showError(message) {
+        jsonPreview.innerHTML = `<p class="error">❌ ${message}</p>`;
+    }
+
+
+    function validateParticipantCount(loadedCount) {
+    const submitContainer = document.getElementById('submit-container');
+    const requiredCount = parseInt(participantSelect.value);
+    
+    participantSelect.disabled = true;
+    if (loadedCount === requiredCount) {
+        submitContainer.innerHTML = '<input type="submit" value="Create Tournament">';
+        submitContainer.style.display = 'block';
+    } else {
+        const difference = requiredCount - loadedCount;
+        const message = difference > 0 
+            ? `You need ${difference} more participants to submit` 
+            : `You need ${Math.abs(difference)} fewer participants to submit`;
+        
+        submitContainer.innerHTML = `<p class="error">${message}</p>`;
+        submitContainer.style.display = 'block';
+    }
+}
+});
 </script>
 {% endblock %}

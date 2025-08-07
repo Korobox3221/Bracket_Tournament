@@ -15,13 +15,14 @@ from django.http import JsonResponse
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        bracket_name = Bracket.objects.get(bracket_name = 'Games')
+        bracket_name = Bracket.objects.get(bracket_name = 'Games 2')
         object_db = Bracket_object.objects.filter(bracket_name = bracket_name)
         participant_db = Participant_stages.objects.filter(bracket_name = bracket_name)
         for p in object_db:
-            p.current_stage = 'semi-final'
+            p.current_stage = 'quater-final'
             p.save()
         for p in participant_db:
             p.final = False
+            p.semi_final = False
             p.save()
 

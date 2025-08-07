@@ -45,26 +45,42 @@ function showFinalSelectionModal() {
     finalists.forEach(participant => {
         const option = document.createElement('div');
         option.className = 'participant-option';
-        
-        const img = participant.querySelector('img');
-        const name = participant.querySelector('.obj_name, .finalist-name');
-        
-        if (!img || !name) {
-            console.warn('Finalist missing required elements', participant);
-            return;
-        }
+        const youtubeId = participant.dataset.youtubeId || '1T22wNvoNiU';
         
         option.innerHTML = `
-            <img src="${img.src}" alt="${name.textContent}">
-            <span>${name.textContent}</span>
+        <div class="video-option">
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/${youtubeId}?enablejsapi=1" 
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div class="participant-info">
+                <img src="${participant.querySelector('img').src}">
+                <h4>${participant.querySelector('.finalist-name').textContent}</h4>
+                <button class="select-participant">Select This Participant</button>
+            </div>
+        </div>
         `;
         
-        option.addEventListener('click', () => {
+        // Select button handler
+        const selectBtn = option.querySelector('.select-participant');
+        selectBtn.addEventListener('click', () => {
+            // Clear previous selections
             document.querySelectorAll('.participant-option').forEach(opt => {
-                opt.style.background = 'white';
+                opt.classList.remove('selected');
+                opt.querySelector('.select-participant').textContent = 'Select This Participant';
             });
-            option.style.background = '#e8f5e9';
+            
+            // Mark this selection
+            option.classList.add('selected');
+            selectBtn.textContent = '✓ Selected';
             selectedParticipant = participant;
+            
+            // Enable confirmation
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = 'Confirm Selection';
         });
         
         optionsContainer.appendChild(option);
@@ -95,7 +111,7 @@ function placeChampion() {
     // Get the finalist's data
     const img = selectedParticipant.querySelector('img');
     const name = selectedParticipant.querySelector('.obj_name, .finalist-name');
-    name.style.fontSize = '17px'
+    name.style.fontSize = '15px'
     
     if (!img || !name) {
         console.error('Selected finalist is missing required elements');

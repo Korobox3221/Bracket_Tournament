@@ -27,14 +27,15 @@ class Bracket_object(models.Model):
     bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True, related_name = 'brack_name')
     img = models.CharField(max_length = 1000)
     slot_row_semi = models.FloatField(default=1)
-    slot_row_final = models.FloatField(default=1)  # Vertical position (1-8)
     is_left_side = models.BooleanField(default=True)
+    video_url = models.CharField(max_length = 1000, blank = True, null=True)
     def __str__(self):
         return f"{self.bracket_name}: {self.obj_name}"
 
 class Participant_stages(models.Model):
      bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True, related_name = 'br_name')
      obj_name  = models.ForeignKey(Bracket_object, on_delete=models.CASCADE, blank = True, null=True)
+     quater_final = models.BooleanField(default=False)
      semi_final = models.BooleanField(default=False)
      final = models.BooleanField(default=False)
      def __str__(self):

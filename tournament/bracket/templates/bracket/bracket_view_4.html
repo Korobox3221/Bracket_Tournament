@@ -28,7 +28,7 @@ body, html {
     </div>
     
     {% for obj in semi_finalists %}
-    <div class="participant-slot" 
+    <div data-youtube-id="{{obj.video_url}}" class="participant-slot" 
          data-id="{{ obj.id }}"
          style="top: {{ obj.slot_row_semi }}%; 
                 left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">
@@ -53,7 +53,7 @@ body, html {
         
         <!-- Original Participants (hidden or shown as needed) -->
         {% for obj in semi_finalists %}
-        <div class="participant-slot original-participant"
+        <div  class="participant-slot original-participant"
             data-id="{{ obj.id }}"
             style="top: {{ obj.slot_row_semi}}%; 
                     left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">  <!-- Hide original participants in final stage -->
@@ -66,7 +66,7 @@ body, html {
         
         <!-- Finalists -->
         {% for finalist in finalists %}
-        <div class="finalist-slot"
+        <div data-youtube-id="{{finalist.video_url}}" class="finalist-slot"
             data-id="{{ finalist.id }}"
             style="top: 36.3%; 
                     left: {{ finalist.is_left_side|yesno:'32.4,61.7' }}%;">
