@@ -1,46 +1,34 @@
 let currentSelectionMode = null;
 let selectedParticipant = null;
 const selectedFinalists = [];
+let selectedChampion = null;
 
 function initializeEventListeners() {
-    const finalPickButton = document.getElementById('final-pick');
-    if (finalPickButton) {
-        finalPickButton.addEventListener('click', () => {
-            currentSelectionMode = 'final';
-            showFinalSelectionModal();
-        });
-    }
+    document.getElementById('final-pick').addEventListener('click', () => {
+        currentSelectionMode = 'final';
+        showFinalSelectionModal();
+    });
     
-    const confirmButton = document.getElementById('confirm-selection');
-    if (confirmButton) {
-        confirmButton.addEventListener('click', handleSelectionConfirmation);
-    }
+    document.getElementById('confirm-selection').addEventListener('click', handleSelectionConfirmation);
     
-    const modal = document.getElementById('selection-modal');
-    if (modal) {
-        modal.addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                closeModal();
-            }
-        });
-    }
+    document.getElementById('selection-modal').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+            closeModal();
+        }
+    });
 }
 
 function showFinalSelectionModal() {
     const modal = document.getElementById('selection-modal');
     const optionsContainer = document.getElementById('participant-options');
-    
-    if (!modal || !optionsContainer) return;
-    
+    const confirmBtn = document.getElementById('confirm-selection');
     optionsContainer.innerHTML = '';
     
-    // Select both original finalists and any cloned ones
-    const finalists = Array.from(document.querySelectorAll('.finalist-slot, .finalist-clone'));
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = 'Select a participant first';
     
-    if (finalists.length === 0) {
-        console.warn('No finalists found for selection');
-        return;
-    }
+    // Get all finalists (both original and clones)
+    const finalists = Array.from(document.querySelectorAll('.finalist-slot, .finalist-clone'));
     
     finalists.forEach(participant => {
         const option = document.createElement('div');
@@ -58,27 +46,23 @@ function showFinalSelectionModal() {
             </div>
             <div class="participant-info">
                 <img src="${participant.querySelector('img').src}">
-                <h4>${participant.querySelector('.finalist-name').textContent}</h4>
+                <h4>${participant.querySelector('.finalist-name, .obj_name').textContent}</h4>
                 <button class="select-participant">Select This Participant</button>
             </div>
         </div>
         `;
         
-        // Select button handler
         const selectBtn = option.querySelector('.select-participant');
         selectBtn.addEventListener('click', () => {
-            // Clear previous selections
             document.querySelectorAll('.participant-option').forEach(opt => {
                 opt.classList.remove('selected');
                 opt.querySelector('.select-participant').textContent = 'Select This Participant';
             });
             
-            // Mark this selection
             option.classList.add('selected');
             selectBtn.textContent = '✓ Selected';
             selectedParticipant = participant;
             
-            // Enable confirmation
             confirmBtn.disabled = false;
             confirmBtn.textContent = 'Confirm Selection';
         });
@@ -90,10 +74,7 @@ function showFinalSelectionModal() {
 }
 
 function handleSelectionConfirmation() {
-    if (!selectedParticipant) {
-        console.warn('No participant selected');
-        return;
-    }
+    if (!selectedParticipant) return;
 
     if (currentSelectionMode === 'final') {
         placeChampion();
@@ -102,82 +83,82 @@ function handleSelectionConfirmation() {
 }
 
 function placeChampion() {
-    // Clean up any existing champion
-    const existingChampion = document.querySelector('.champion');
-    if (existingChampion) {
-        existingChampion.remove();
-    }
-
-    // Get the finalist's data
-    const img = selectedParticipant.querySelector('img');
-    const name = selectedParticipant.querySelector('.obj_name, .finalist-name');
-    name.style.fontSize = '15px'
+    const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+    console.log(amount_of_participants)
     
-    if (!img || !name) {
-        console.error('Selected finalist is missing required elements');
-        return;
-    }
+    // Remove existing champion if any
+    const existingChamp = document.querySelector('.champion');
+    if (existingChamp) existingChamp.remove();
 
+    // Get elements (works with both original and cloned participants)
+    const imgSrc = selectedParticipant.querySelector('img').src;
+    const name = selectedParticipant.querySelector('.finalist-name, .obj_name').textContent;
+    
     // Create champion container
     const champion = document.createElement('div');
-    champion.className = 'champion';
+    champion.className = 'champion winner-container';
     
-    // Create content structure
-
-    // Clone and style the name
-    const nameClone = name.cloneNode(true);
-    nameClone.className = 'champion-name';
-    
-    // Clone and style the image
-    const imgClone = img.cloneNode(true);
-    imgClone.className = 'champion-image';
-    
-    // Build the structure
-    champion.appendChild(nameClone);
-    champion.appendChild(imgClone);
-    
-    // Position the champion
-    champion.style.top = '69.5%';
-    champion.style.left = '47.7%';
-    champion.style.position = 'fixed';
-    champion.style.position = 'absolute';
-    champion.style.transform = 'translate(-50%, -50%)';
-    champion.style.zIndex = '1000';
- // Higher than everything else
-    
-    document.querySelector('.bracket-wrapper').appendChild(champion);
-
-
-    
-    // Hide the final pick button
-    const finalPickButton = document.getElementById('final-pick');
-    if (finalPickButton) {
-        finalPickButton.hidden = true;
+    // Different styling based on bracket size
+    if (amount_of_participants === 4) {
+        champion.innerHTML = `
+            <div class="winner-content">
+                <div class="winner-name" style="font-size: 15px;">${name}</div>
+                <img src="${imgSrc}" class="winner-image" style="width: 150px; height: 150px;">
+            </div>
+        `;
+        champion.style.cssText = `
+            position: absolute;
+            top: 69.5%;
+            left: 47.7%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        `;
+    } else if (amount_of_participants === 8) {
+        champion.innerHTML = `
+            <div class="winner-content">
+                <div class="winner-name" style="font-size: 17px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
+                <img src="${imgSrc}" class="winner-image" style="width: 150px; height: 150px;">
+            </div>
+        `;
+        champion.style.cssText = `
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        `;
+    }else if (amount_of_participants === 16) {
+        champion.innerHTML = `
+            <div class="winner-content">
+                <div class="winner-name" style="font-size: 17px;">${name}</div>
+                <img src="${imgSrc}" class="winner-image" style="width: 135px; height: 135px;">
+            </div>
+        `;
+        champion.style.cssText = `
+            position: absolute;
+            top: 67.6%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px`;
+ 
     }
+
+    document.querySelector('.bracket-wrapper').appendChild(champion);
+    document.getElementById('final-pick').hidden = true;
     
-    console.log('Champion selected:', name.textContent);
-    const obj_id = selectedParticipant.dataset.id
-    console.log(obj_id)
-    save_winner(obj_id)
+    save_winner(selectedParticipant.dataset.id);
 }
 
 function closeModal() {
-    const modal = document.getElementById('selection-modal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
+    document.getElementById('selection-modal').style.display = 'none';
     selectedParticipant = null;
 }
 
-// Initialize when DOM is ready
-if (document.readyState !== 'loading') {
-    initializeEventListeners();
-} else {
-    document.addEventListener('DOMContentLoaded', initializeEventListeners);
-}
+// Initialize everything when the page loads
+document.addEventListener('DOMContentLoaded', initializeEventListeners);
 
-function save_winner(id){
-        fetch(`/object/${id}`, {
+function save_winner(id) {
+    fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -185,8 +166,13 @@ function save_winner(id){
         },
         body: JSON.stringify({ current_stage: 'winner' })
     })
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to save winner');
+        console.log('Winner saved successfully');
+    })
+    .catch(error => console.error('Error saving winner:', error));
 }
 
-    function getCSRFToken() {
-        return document.querySelector('[name=csrfmiddlewaretoken]').value;
-    }
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}

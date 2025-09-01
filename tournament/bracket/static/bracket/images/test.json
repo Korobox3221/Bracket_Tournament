@@ -1,17 +1,17 @@
 [
     {
         "name": "La La Land",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_FMjpg_UX1000_.jpg",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_.jpg",
         "youtubeUrl": "https://www.youtube.com/watch?v=0pdqf4P9MB8"
     },
     {
         "name": "Seven",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BY2IzNzMxZjctZjUxZi00YzAxLTk3ZjMtODFjODdhMDU5NDM1XkEyXkFqcGc@._V1_.jpg",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BOTUwODM5MTctZjczMi00OTk4LTg3NWUtNmVhMTAzNTNjYjcyXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
         "youtubeUrl": "https://www.youtube.com/watch?v=znmZoVkCjpI"
     },
     {
         "name": "The Dark Knight",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg",
         "youtubeUrl": "https://www.youtube.com/watch?v=EXeTwQWrcwY"
     },
     {
@@ -20,23 +20,23 @@
         "youtubeUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0"
     },
     {
-        "name": "Inception",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+        "name": "The Shawshank Redemption",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BNDE4OTMxMTRlOF5BMl5BanBnXkFtZTgwNjAyNzM4MTI@._V1_.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=PLl99DlL6b4"
     },
     {
-        "name": "Inception",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+        "name": "The Godfather",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=sY1S34973zA"
     },
     {
-        "name": "Inception",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+        "name": "Pulp Fiction",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=s7EdQ4FqbhY"
     },
     {
-        "name": "Inception",
-        "imageUrl": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=YoHD9XEInc0"
+        "name": "Forrest Gump",
+        "imageUrl": "https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=bLvqoHBptjg"
     }
 ]
