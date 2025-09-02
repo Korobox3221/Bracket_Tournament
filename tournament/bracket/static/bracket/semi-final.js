@@ -163,13 +163,16 @@ function placeFinalist() {
     const finalPosition = currentSelectionMode === 'semi-left' 
         ? document.getElementById('left-pick') 
         : document.getElementById('right-pick');
-    
+    const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value)
+    console.log(amount_of_participants)   
     // Clone and modify the structure
+
     const clone = selectedParticipant.cloneNode(true);
     clone.classList.add('finalist-clone');
     
     // Remove any conflicting inline styles from the clone
-    clone.style.cssText = `
+    if (amount_of_participants === 4){
+        clone.style.cssText = `
         position: absolute;
         top: 35.5%;
         left: ${currentSelectionMode === 'semi-left' ? '32.4%' : '61.7%'};
@@ -206,6 +209,91 @@ function placeFinalist() {
     if (selectedFinalists.length === 2) {
         document.getElementById('final-pick').hidden = false;
     }
+
+    }
+    else if (amount_of_participants === 8){
+        clone.style.cssText = `
+        position: absolute;
+        top: 36.2%;
+        left: ${currentSelectionMode === 'semi-left' ? '39.2%' : '60.0%'};
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        width: 140px;
+        height: 140px;
+    `;
+    
+    // Modify the inner image dimensions
+    const img = clone.querySelector('img');
+    if (img) {
+        img.style.width = '110px';
+        img.style.height = '110px';
+    }
+    
+    // Modify the participant box if it exists
+    const participantBox = clone.querySelector('.participant-box');
+    if (participantBox) {
+        participantBox.style.width = '145px';
+        participantBox.style.height = '140px';
+    }
+    
+    document.querySelector('.bracket-wrapper').appendChild(clone);
+    
+    // Rest of your existing code...
+    selectedFinalists.push(selectedParticipant.dataset.id);
+    selectedParticipant.classList.add('finalist-original');
+    finalPosition.style.display = 'none';
+    const obj_id = selectedParticipant.dataset.id;
+    save_finalists(obj_id);
+    
+    if (selectedFinalists.length === 2) {
+        document.getElementById('final-pick').hidden = false;
+    }
+    }
+    else if (amount_of_participants === 16){
+    clone.style.cssText = `
+        position: absolute;
+        top: 40%;
+        left: ${currentSelectionMode === 'semi-left' ? '37.5%' : '62.2%'};
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        width: 115px;
+        height: 115px;
+    `;
+    
+    // Modify the inner image dimensions
+    const img = clone.querySelector('img');
+    if (img) {
+        img.style.width = '95px';
+        img.style.height = '95px';
+    }
+    
+    const obj_name = clone.querySelector('obj_name');
+
+    if (obj_name){
+        obj_name.style.fontSize = '15px';
+    }
+    
+    // Modify the participant box if it exists
+    const participantBox = clone.querySelector('.participant-box');
+    if (participantBox) {
+        participantBox.style.width = '112px';
+        participantBox.style.height = '115px';
+    }
+    
+    document.querySelector('.bracket-wrapper').appendChild(clone);
+    
+    // Rest of your existing code...
+    selectedFinalists.push(selectedParticipant.dataset.id);
+    selectedParticipant.classList.add('finalist-original');
+    finalPosition.style.display = 'none';
+    const obj_id = selectedParticipant.dataset.id;
+    save_finalists(obj_id);
+    
+    if (selectedFinalists.length === 2) {
+        document.getElementById('final-pick').hidden = false;
+    }
+    
+    }
 }
 
 function placeChampion() {
@@ -213,37 +301,76 @@ function placeChampion() {
     const existingChamp = document.querySelector('.champion');
     if (existingChamp) existingChamp.remove();
 
-    const originalBox = selectedParticipant.querySelector('.participant-box');
-    const img = originalBox.querySelector('img').cloneNode(true);
-    const name = selectedParticipant.querySelector('.obj_name').cloneNode(true);
-    // Create new minimal champion container
-    
-    img.style.width = '150px';
-    img.style.height = '150px';
-    name.style.fontSize = '17px'
+    // Get participant count and elements
+    const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+    const originalBox = selectedParticipant.querySelector('.participant-box, .finalist-box');
+    const img = originalBox ? originalBox.querySelector('img').cloneNode(true) : 
+    selectedParticipant.querySelector('img').cloneNode(true);
+    const name = selectedParticipant.querySelector('.obj_name, .finalist-name').cloneNode(true);
+
+    // Create champion container
     const champion = document.createElement('div');
     champion.classList.add('champion');
-    
-    // Create simple structure for name and image
-    const content = document.createElement('div');
-    // Space between name and image
 
-    
-    // Build the structure
+    // Style based on participant count
+    if (amount_of_participants === 4) {
+        // Styles for 4-participant bracket
+        img.style.cssText = 'width: 150px; height: 150px;';
+        name.style.cssText = 'font-size: 17px; margin: 10px 0;';
+        
+        champion.style.cssText = `
+            position: absolute;
+            top: 69.5%;
+            left: 47.7%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        `;
+    } 
+    else if (amount_of_participants === 8) {
+        // Styles for 8-participant bracket
+        img.style.cssText = 'width: 120px; height: 120px;';
+        name.style.cssText = 'font-size: 15px; margin: 8px 0;';
+        
+        champion.style.cssText = `
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        `;
+    }
+
+        else if (amount_of_participants === 16) {
+        // Styles for 8-participant bracket
+        img.style.cssText = 'width: 135px; height: 135px;';
+        name.style.cssText = 'font-size: 17px;';
+        champion.style.cssText = `
+            position: absolute;
+            top: 67.6%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px`;
+ 
+    }
+
+    // Build champion structure
     champion.appendChild(name);
     champion.appendChild(img);
-    champion.style.top = '69.5%';
-    champion.style.left = '47.7%';
-    champion.style.position = 'fixed';
-    champion.style.position = 'absolute';
-    champion.style.transform = 'translate(-50%, -50%)';
-    champion.style.zIndex = '1000';
-
-
     document.querySelector('.bracket-wrapper').appendChild(champion);
+
+    // Hide final pick button and save winner
     document.getElementById('final-pick').hidden = true;
-    const obj_id = selectedParticipant.dataset.id
-    save_winner(obj_id)
+    save_winner(selectedParticipant.dataset.id);
+
+    console.log('Champion selected:', name.textContent);
 }
 
 function closeModal() {

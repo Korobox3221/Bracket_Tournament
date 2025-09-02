@@ -15,9 +15,8 @@ body, html {
 }
 </style>
 
+<input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'></input>
 {% if not finalists %}
-
-
 <div class="bracket-wrapper">
     <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
     
