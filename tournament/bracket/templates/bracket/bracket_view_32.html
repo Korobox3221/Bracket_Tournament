@@ -15,9 +15,10 @@ body, html {
 }
 </style>
 <input hidden id = 'group' value = '{{group}}'>
-<input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'>
-{% if final_stage == True %}
-    {% if not finalists %}
+<input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'></input>
+
+{%if final_stage == True %}
+{% if not winners_finalists %}
 <div class="bracket-wrapper">
     <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
     
@@ -41,7 +42,7 @@ body, html {
 </div>
 
 {% else %}
-    {% if not winner %}
+    {% if not winner_winner %}
     <div class="bracket-wrapper">
         <div class="button-container">
             <button hidden class="pick-button" id="left-pick">Pick</button>
@@ -65,7 +66,7 @@ body, html {
         {% endfor %}
         
         <!-- Finalists -->
-        {% for finalist in winners %}
+        {% for finalist in winners_finalists %}
         <div data-youtube-id="{{finalist.video_url}}" class="finalist-slot"
             data-id="{{ finalist.id }}"
             style="top: 36.3%; 
@@ -134,7 +135,7 @@ body, html {
 </div>
 {% csrf_token %}
 <script src="{% static 'bracket/' %}{% if not finalists %}semi-final{% else %}final{% endif %}.js"></script>
-{% endif %}
+{% else %}
 {% if not semi_finalists %}
     <div class="bracket-wrapper">
         <img src="{% static 'bracket/images/quater-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
@@ -324,4 +325,5 @@ body, html {
 </div>
 {% csrf_token %}
 <script src="{% static 'bracket/' %}{% if not semi_finalists %}quater-final{% elif not finalists%}semi-final{% else %}final{% endif %}.js"></script>
+{%endif%}
 {% endblock %}

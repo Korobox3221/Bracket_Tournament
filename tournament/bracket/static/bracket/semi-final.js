@@ -2,7 +2,8 @@
 let currentSelectionMode = null; // 'semi-left', 'semi-right', or 'final'
 let selectedParticipant = null;
 const selectedFinalists = [];
-
+const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+const group = parseInt(document.getElementById('group').value);
 // Initialize all event listeners once
 function initializeEventListeners() {
     document.getElementById('left-pick').addEventListener('click', () => {
@@ -171,7 +172,7 @@ function placeFinalist() {
     clone.classList.add('finalist-clone');
     
     // Remove any conflicting inline styles from the clone
-    if (amount_of_participants === 4){
+    if (amount_of_participants === 4 || amount_of_participants === 32){
         clone.style.cssText = `
         position: absolute;
         top: 35.5%;
@@ -313,7 +314,7 @@ function placeChampion() {
     champion.classList.add('champion');
 
     // Style based on participant count
-    if (amount_of_participants === 4) {
+    if (amount_of_participants === 4 || amount_of_participants == 32) {
         // Styles for 4-participant bracket
         img.style.cssText = 'width: 150px; height: 150px;';
         name.style.cssText = 'font-size: 17px; margin: 10px 0;';
@@ -385,6 +386,20 @@ document.addEventListener('DOMContentLoaded', initializeEventListeners);
         
         
 function save_finalists(id){
+    if (amount_of_participants === 32){
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner_final' })
+    })
+    }
+
+    else{
+
+    
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -394,12 +409,25 @@ function save_finalists(id){
         body: JSON.stringify({ current_stage: 'final' })
     })
 }
+}
 
     function getCSRFToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;
     }
 
 function save_winner(id){
+        if (amount_of_participants === 32){
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner_winner' })
+    })
+    }
+
+    else{  
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -407,7 +435,7 @@ function save_winner(id){
             'X-CSRFToken': getCSRFToken()
         },
         body: JSON.stringify({ current_stage: 'winner' })
-    })
+    })}
 }
 
     function getCSRFToken() {

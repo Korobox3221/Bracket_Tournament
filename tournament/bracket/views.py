@@ -224,6 +224,9 @@ def new_tournament(request):
 
 def bracket_view(request, id):
     try:
+        winners_finalists = []
+        winner_winner = []
+        winners = []
         winner = False
         final = []
         semi_final = []
@@ -278,7 +281,16 @@ def bracket_view(request, id):
                         current_group = 4
                     if objects.filter(obj_name__in = group_4).filter(current_stage = 'winner').exists():
                         final_stage = True
-                        winners = objects.filter(current_stage= 'winner', user = user)
+                        semi_winners = []
+                        wins = objects.filter(current_stage= 'winner', user = user)
+                        for win in wins:
+                            semi_winners.append(win.obj_name)
+                        winners  = objects.filter(obj_name__in = semi_winners)
+                        winners_finalists = objects.filter(current_stage= 'winner_final', user = user)
+                        winner_winner = objects.filter(current_stage= 'winner_winner', user = user)
+                        print(winner_winner)
+                        print(winners_finalists)
+                        
                     # Filter participants by the determined group
                     group_participants = GroupParticipant.objects.filter(
                         bracket_name=stage,
@@ -289,6 +301,9 @@ def bracket_view(request, id):
                     semi_finalists_names = [name for name in group_participants if name in semi_final]
                     finalists_names = [name for name in group_participants if name in final]
                     one_eights_names = [name for name in group_participants if name in one_eight]
+                    if final_stage == True:
+                        finalists_names.clear()
+                        semi_finalists_names.clear()
 
                     # Now filter the objects using the combined list of names
                     quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
@@ -348,7 +363,9 @@ def bracket_view(request, id):
                     'user': user,
                     'group' : group,
                     'final_stage': final_stage,
-                    'winners': winners})
+                    'winners': winners,
+                    'winners_finalists': winners_finalists,
+                    'winner_winner': winner_winner})
 def error(request, message):
     return render(request, "bracket/error.html", {
         'message': message
@@ -358,7 +375,7 @@ def error(request, message):
 @api_view(['GET', 'PUT'])
 def object_api(request, id):
     try:
-        obj = Bracket_object.objects.get(pk=id, user = request.user)
+        obj = Bracket_object.objects.get(pk=id, user=request.user)
     except Bracket_object.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -370,17 +387,28 @@ def object_api(request, id):
         serializer = Bracket_object_Serializer(obj, data=request.data, partial=True)
 
         if serializer.is_valid():
-            # First update position fields if they exist in request
+            # First update position fields BEFORE saving
             if 'slot_row_semi' in request.data:
-                if request.data['semi_coords']:
-                    obj.semi_coords = request.data['semi_coords']
-                    obj.save()
-                elif request.data['quater_coords']:
-                    obj.quater_coords = request.data['quater_coords']
-                    obj.save()
+                obj.slot_row_semi = request.data['slot_row_semi']
+            
+            if 'is_left_side' in request.data:
+                obj.is_left_side = request.data['is_left_side']
+            
+            if 'semi_coords' in request.data:
+                obj.semi_coords = request.data['semi_coords']
+            
+            if 'quater_coords' in request.data:
+                obj.quater_coords = request.data['quater_coords']
+            
+            # Save the object with updated coordinates FIRST
+            obj.save()
+            
+            # Then proceed with the serializer save for other fields
+            updated_obj = serializer.save()
+            
 
             # Then proceed with stage transition logic
-            updated_obj = serializer.save()
+
             
             if 'current_stage' in request.data:
                 new_stage = request.data['current_stage']
@@ -471,14 +499,6 @@ def object_api(request, id):
                             'quater_final': True
                         }
                     )
-                    print(f"Ищем GroupParticipant для: obj_name={updated_obj}, bracket_name={bracket_name}, user={request.user}")
-                    
-
-                    GroupParticipant.objects.filter(
-                        obj_name=updated_obj, 
-                        user=request.user
-                    ).update(is_winner=True)
-                    # Ищем GroupParticipant по тем же параметрам, но без is_winner
 
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -3,6 +3,8 @@ let selectedParticipant = null;
 const selectedSemiFinalists = [];
 const selectedFinalists = [];
 const quater_vars = ["left-top", "left-bot", "right-top", "right-bot"]
+const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+const group = parseInt(document.getElementById('group').value);
 // Initialize all event listeners once
 function initializeEventListeners() {
     // Quarter-final buttons
@@ -528,16 +530,57 @@ function save_finalists(id) {
     });
 }
 
-function save_winner(id) {
-    fetch(`/object/${id}`, {
+function save_winner(id){  
+    if (amount_of_participants === 32){
+        let slot_row_semi = 0
+        let is_left_side = 0
+        if (group === 1){
+             slot_row_semi = 26.4;
+             is_left_side = false;
+
+        }
+        else if(group === 2){
+             slot_row_semi = 26.4;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 54.0
+             is_left_side = false
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 54.0
+             is_left_side = true
+
+        }
+        fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': getCSRFToken()
         },
-        body: JSON.stringify({ current_stage: 'winner'})
-    });
+        body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+    })
+
+
+        
+
+    }else{
+
+    
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner' })
+    })
 }
+}
+
 
 function getCSRFToken() {
     return document.querySelector('[name=csrfmiddlewaretoken]').value;
