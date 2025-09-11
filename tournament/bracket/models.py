@@ -43,6 +43,9 @@ class Participant_stages(models.Model):
      semi_final = models.BooleanField(default=False)
      final = models.BooleanField(default=False)
      one_eight = models.BooleanField(default=False)
+     semi_winner = models.BooleanField(default=False)
+     final_winner = models.BooleanField(default=False)
+     winner_winner = models.BooleanField(default=False)
      user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
      def __str__(self):
          return f"{self.obj_name}"

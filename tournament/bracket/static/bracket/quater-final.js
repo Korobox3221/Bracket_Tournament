@@ -531,7 +531,7 @@ function save_finalists(id) {
 }
 
 function save_winner(id){  
-    if (amount_of_participants === 32){
+    if (amount_of_participants === 32 && final_stage == 'False'){
         let slot_row_semi = 0
         let is_left_side = 0
         if (group === 1){

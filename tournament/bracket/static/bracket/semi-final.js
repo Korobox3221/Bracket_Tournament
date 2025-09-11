@@ -2,8 +2,8 @@
 let currentSelectionMode = null; // 'semi-left', 'semi-right', or 'final'
 let selectedParticipant = null;
 const selectedFinalists = [];
+const final_stage = document.getElementById('final_stage').value
 const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
-const group = parseInt(document.getElementById('group').value);
 // Initialize all event listeners once
 function initializeEventListeners() {
     document.getElementById('left-pick').addEventListener('click', () => {
@@ -172,7 +172,7 @@ function placeFinalist() {
     clone.classList.add('finalist-clone');
     
     // Remove any conflicting inline styles from the clone
-    if (amount_of_participants === 4 || amount_of_participants === 32){
+    if (amount_of_participants === 4 || amount_of_participants === 32 && final_stage == 'True' ){
         clone.style.cssText = `
         position: absolute;
         top: 35.5%;
@@ -212,7 +212,7 @@ function placeFinalist() {
     }
 
     }
-    else if (amount_of_participants === 8){
+    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False'){
         clone.style.cssText = `
         position: absolute;
         top: 36.2%;
@@ -314,7 +314,7 @@ function placeChampion() {
     champion.classList.add('champion');
 
     // Style based on participant count
-    if (amount_of_participants === 4 || amount_of_participants == 32) {
+    if (amount_of_participants === 4 || amount_of_participants == 32 && final_stage == 'True') {
         // Styles for 4-participant bracket
         img.style.cssText = 'width: 150px; height: 150px;';
         name.style.cssText = 'font-size: 17px; margin: 10px 0;';
@@ -331,7 +331,7 @@ function placeChampion() {
             gap: 10px;
         `;
     } 
-    else if (amount_of_participants === 8) {
+    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False') {
         // Styles for 8-participant bracket
         img.style.cssText = 'width: 120px; height: 120px;';
         name.style.cssText = 'font-size: 15px; margin: 8px 0;';
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', initializeEventListeners);
         
         
 function save_finalists(id){
-    if (amount_of_participants === 32){
+    if (amount_of_participants === 32 && final_stage == 'True'){
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -416,7 +416,7 @@ function save_finalists(id){
     }
 
 function save_winner(id){
-        if (amount_of_participants === 32){
+        if (amount_of_participants === 32 && final_stage == 'True'){
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -426,8 +426,40 @@ function save_winner(id){
         body: JSON.stringify({ current_stage: 'winner_winner' })
     })
     }
+    else if (amount_of_participants === 32 && final_stage == 'False'){
+        let slot_row_semi = 0
+        let is_left_side = 0
+        if (group === 1){
+             slot_row_semi = 26.4;
+             is_left_side = false;
 
-    else{  
+        }
+        else if(group === 2){
+             slot_row_semi = 26.4;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 54.0
+             is_left_side = false
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 54.0
+             is_left_side = true
+
+        }
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+    })
+
+    }else{  
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -436,6 +468,7 @@ function save_winner(id){
         },
         body: JSON.stringify({ current_stage: 'winner' })
     })}
+    
 }
 
     function getCSRFToken() {

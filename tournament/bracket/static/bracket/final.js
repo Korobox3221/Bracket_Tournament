@@ -2,6 +2,8 @@ let currentSelectionMode = null;
 let selectedParticipant = null;
 const selectedFinalists = [];
 let selectedChampion = null;
+const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+const final_stage = document.getElementById('final_stage').value
 
 function initializeEventListeners() {
     document.getElementById('final-pick').addEventListener('click', () => {
@@ -99,7 +101,7 @@ function placeChampion() {
     champion.className = 'champion winner-container';
     
     // Different styling based on bracket size
-    if (amount_of_participants === 4) {
+    if (amount_of_participants === 4 || amount_of_participants === 32 && final_stage == 'True') {
         champion.innerHTML = `
             <div class="winner-content">
                 <div class="winner-name" style="font-size: 15px;">${name}</div>
@@ -113,7 +115,7 @@ function placeChampion() {
             transform: translate(-50%, -50%);
             z-index: 1000;
         `;
-    } else if (amount_of_participants === 8) {
+    } else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False') {
         champion.innerHTML = `
             <div class="winner-content">
                 <div class="winner-name" style="font-size: 17px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
@@ -158,6 +160,59 @@ function closeModal() {
 document.addEventListener('DOMContentLoaded', initializeEventListeners);
 
 function save_winner(id) {
+    if (amount_of_participants === 32 && final_stage == 'True'){
+
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner_winner' })
+    })
+    .then(response => {
+        if (!response.ok) throw new Error('Failed to save winner');
+        console.log('Winner saved successfully');
+    })
+    .catch(error => console.error('Error saving winner:', error));
+
+    }
+    else if (amount_of_participants === 32 && final_stage == 'False'){
+        let slot_row_semi = 0
+        let is_left_side = 0
+        if (group === 1){
+             slot_row_semi = 26.4;
+             is_left_side = false;
+
+        }
+        else if(group === 2){
+             slot_row_semi = 26.4;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 54.0
+             is_left_side = false
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 54.0
+             is_left_side = true
+
+        }
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+    })
+
+    }else{
+
+    
     fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -171,6 +226,7 @@ function save_winner(id) {
         console.log('Winner saved successfully');
     })
     .catch(error => console.error('Error saving winner:', error));
+}
 }
 
 function getCSRFToken() {

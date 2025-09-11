@@ -16,8 +16,9 @@ body, html {
 </style>
 <input hidden id = 'group' value = '{{group}}'>
 <input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'></input>
+<input hidden id = 'final_stage' value = '{{final_stage}}'></input>
 
-{%if final_stage == True %}
+{% if final_stage == True %}
 {% if not winners_finalists %}
 <div class="bracket-wrapper">
     <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
@@ -90,7 +91,7 @@ body, html {
         <img src="{% static 'bracket/images/semi-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
         
         <!-- Original Participants (hidden or shown as needed) -->
-        {% for obj in semi_finalists %}
+        {% for obj in winners %}
         <div class="participant-slot original-participant"
             data-id="{{ obj.id }}"
             style="top: {{ obj.slot_row_semi}}%; 
@@ -103,7 +104,7 @@ body, html {
         {% endfor %}
         
         <!-- Finalists -->
-        {% for finalist in finalists %}
+        {% for finalist in winners_finalists %}
         <div class="finalist-slot"
             data-id="{{ finalist.id }}"
             style="top: 36.3%; 
@@ -115,11 +116,11 @@ body, html {
         </div>
         {% endfor %}
         <div class="participant-slot original-participant"
-            data-id="{{ winner.id }}"
+            data-id="{{ winner_winner.id }}"
             style="top: 69.5%; left: 56%;"> 
             <div class="champion_winner">
-                <span class="obj_name">{{ winner.obj_name }}</span>
-                <img src="{{ winner.img }}" alt="{{ winner.obj_name }}">
+                <span class="obj_name">{{ winner_winner.obj_name }}</span>
+                <img src="{{ winner_winner.img }}" alt="{{ winner_winner.obj_name }}">
             </div>
         </div>
     </div>
@@ -134,7 +135,7 @@ body, html {
     </div>
 </div>
 {% csrf_token %}
-<script src="{% static 'bracket/' %}{% if not finalists %}semi-final{% else %}final{% endif %}.js"></script>
+<script src="{% static 'bracket/' %}{% if not winners_finalists %}semi-final{% else %}final{% endif %}.js"></script>
 {% else %}
 {% if not semi_finalists %}
     <div class="bracket-wrapper">
