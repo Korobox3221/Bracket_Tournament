@@ -427,6 +427,7 @@ function save_winner(id){
     })
     }
     else if (amount_of_participants === 32 && final_stage == 'False'){
+        const group = parseInt(document.getElementById('group').value);
         let slot_row_semi = 0
         let is_left_side = 0
         if (group === 1){

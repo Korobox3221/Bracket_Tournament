@@ -4,7 +4,6 @@ const selectedSemiFinalists = [];
 const selectedFinalists = [];
 const quater_vars = ["left-top", "left-bot", "right-top", "right-bot"]
 const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
-const group = parseInt(document.getElementById('group').value);
 // Initialize all event listeners once
 function initializeEventListeners() {
     // Quarter-final buttons
@@ -532,8 +531,10 @@ function save_finalists(id) {
 
 function save_winner(id){  
     if (amount_of_participants === 32 && final_stage == 'False'){
+        const group = parseInt(document.getElementById('group').value);
         let slot_row_semi = 0
         let is_left_side = 0
+        console.log(group)
         if (group === 1){
              slot_row_semi = 26.4;
              is_left_side = false;
