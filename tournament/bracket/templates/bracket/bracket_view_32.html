@@ -17,6 +17,11 @@ body, html {
 <input hidden id = 'group' value = '{{group}}'>
 <input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'></input>
 <input hidden id = 'final_stage' value = '{{final_stage}}'></input>
+{%if final_stage == False %}
+<h1>Selection Stage {{group}}/4</h1>
+{% else %}
+<h1>Final stage</h1>
+{%endif%}
 
 {% if final_stage == True %}
 {% if not winners_finalists %}
@@ -96,7 +101,7 @@ body, html {
             data-id="{{ obj.id }}"
             style="top: {{ obj.slot_row_semi}}%; 
                     left: {{ obj.is_left_side|yesno:'12.2,85.6' }}%;">  <!-- Hide original participants in final stage -->
-            <span class="obj_name">{{ obj.obj_name }}</span>
+            <span style = 'text-overflow: ellipsis;' class="obj_name">{{ obj.obj_name }}</span>
             <div class="participant-box">
                 <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
             </div>
@@ -109,7 +114,7 @@ body, html {
             data-id="{{ finalist.id }}"
             style="top: 36.3%; 
                     left: {{ finalist.is_left_side|yesno:'32.4,61.7' }}%;">
-            <span class="finalist-name">{{ finalist.obj_name }}</span>
+            <span  class="obj_name">{{ finalist.obj_name }}</span>
             <div class="finalist-box">
                 <img src="{{ finalist.img }}" alt="{{ finalist.obj_name }}">
             </div>

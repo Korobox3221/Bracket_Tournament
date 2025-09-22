@@ -261,6 +261,8 @@ def bracket_view(request, id):
         for p in Participant_stages.objects.filter(bracket_name = stage, one_eight = True, user = user): one_eight.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, semi_winner = True, user = user): semi_winners.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, final_winner = True, user = user): winner_finalists.append(p.obj_name.obj_name)
+        if len(winner_finalists) <2:
+            winner_finalists.clear()
         if stage.amount_of_participants == 32:
                     # Determine which group to display based on the winners in each group
                     current_group = 1
@@ -298,7 +300,11 @@ def bracket_view(request, id):
                     print(semis_check)
                     quater_finalists_names = [name for name in group_participants if name in quater_final]
                     semi_finalists_names = [name for name in group_participants if name in semi_final]
+                    if len(semi_finalists_names)<4:
+                        semi_finalists_names.clear()
                     finalists_names = [name for name in group_participants if name in final]
+                    if len(finalists_names)< 2:
+                        finalists_names.clear()
                     one_eights_names = [name for name in group_participants if name in one_eight]
 
 
