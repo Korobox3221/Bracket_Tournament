@@ -8,7 +8,7 @@
 
     <div class="brackets-grid">
         {% for bracket in brackets %}
-        <a  href="/bracket/{{bracket.id}}" class="bracket-card">
+        <a  href  = "{% if not user.is_authenticated %}{% url 'login' %}{% else %}/bracket/{{bracket.id}}{% endif %}" class="bracket-card">
             <div class="bracket-image-container">
                 <img src="{{ bracket.img|default:'https://via.placeholder.com/400x225?text=Tournament' }}" 
                      alt="{{ bracket.bracket_name }}" 

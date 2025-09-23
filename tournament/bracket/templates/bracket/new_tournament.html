@@ -29,8 +29,6 @@
                         <option value="8">8 Participants</option>
                         <option value="16">16 Participants</option>
                         <option value="32">32 Participants</option>
-                        <option value="64">64 Participants</option>
-                        <option value="128">128 Participants</option>
                     </select>
                 </div>
             </div>
@@ -45,7 +43,7 @@
                             <svg class='upload-icon' viewBox="0 0 24 24">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
                             </svg>
-                            Upload JSON/CSV
+                            Upload JSON
                         </button>
                         <input type="file" id="json-file-input" accept=".json,.csv" style="display: none;">
                     </div>
@@ -54,7 +52,7 @@
                         <div class='empty-state'>
                             <img src='https://www.svgrepo.com/show/346699/tournament.svg' class='empty-icon'>
                             <p>No participants added yet</p>
-                            <p class='small-text'>Upload a JSON/CSV file or use the button above</p>
+                            <p class='small-text'>Upload a JSON file or use the button above</p>
                         </div>
                     </div>
                     
@@ -81,7 +79,7 @@
             File Format Help
         </button>
         <div class='help-content'>
-            <h3>JSON/CSV Format Requirements</h3>
+            <h3>JSON Format Requirements</h3>
             <div class='format-example'>
                 <pre>[
   {
@@ -597,10 +595,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // File upload handling (keep your existing JS logic)
 
     
-    participantsContainer.innerHTML = `<p> Put JSON or CSV file with ${participantSelect.value} participants </p>`;
+    participantsContainer.innerHTML = `<p> Put JSON  file with ${participantSelect.value} participants </p>`;
     
     participantSelect.addEventListener('change', function(){
-        participantsContainer.innerHTML = `<p> Put JSON or CSV file with ${participantSelect.value} participants </p>`;
+        participantsContainer.innerHTML = `<p> Put JSON  file with ${participantSelect.value} participants </p>`;
         console.log(participantSelect.value);
     });
 
