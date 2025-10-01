@@ -3,6 +3,8 @@ let selectedParticipant = null;
 const selectedSemiFinalists = [];
 const selectedQuaterFinalists = [];
 const selectedFinalists = [];
+const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value);
+const final_stage = document.getElementById('final_stage').value
 const quater_vars = ["left-top", "left-bot", "right-top", "right-bot"]
 const one_eight_vars = ["first","second", 'third', 'fourth']
 // Initialize all event listeners once
@@ -565,15 +567,85 @@ function save_finalists(id) {
 }
 
 function save_winner(id) {
-    fetch(`/object/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken()
-        },
-        body: JSON.stringify({ current_stage: 'winner' })
-    });
-}
+    if (amount_of_participants == 128){
+        const group = parseInt(document.getElementById('group').value);
+        is_left_side = 0;
+        slot_row_semi = 0;
+        if (group === 1){
+             slot_row_semi = 32.5;
+             is_left_side = true;
+
+        }
+        else if(group === 2){
+             slot_row_semi = 18;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 32.5;
+             is_left_side = false;
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 18;
+             is_left_side = false;
+
+        }
+        else if (group === 5){
+             slot_row_semi = 47.2;
+             is_left_side = false;
+
+        }
+        else if(group === 6){
+             slot_row_semi = 61.8;
+             is_left_side = false;
+
+        }
+
+        else if (group ===7){
+             slot_row_semi = 47.2;
+             is_left_side = true;
+
+        }
+        else if (group === 8){
+             slot_row_semi = 61.8;
+             is_left_side = true;
+
+        }
+       fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show reload window after successful save
+                showReloadWindow();
+            } else {
+                console.error('Failed to save winner');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            });}
+    else{
+            fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner'})
+        })
+
+        }
+    }
+
+
 
 
 function save_quater_finalists(id, slotRowSemi) {
@@ -648,4 +720,89 @@ function showFinalSelectionModal() {
     });
     
     modal.style.display = 'flex';
+}
+
+function showReloadWindow() {
+    // Create overlay
+    const group = parseInt(document.getElementById('group').value);
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    `;
+    
+    // Create modal window
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        max-width: 400px;
+        width: 80%;
+    `;
+    if (group == 4){
+         modal.innerHTML = `
+        <h2 style="color: #2c3e50; margin-bottom: 20px;">🎉 Winner Saved Successfully!</h2>
+        <p style="margin-bottom: 25px; color: #555;">This stage is complete. Ready to continue to the final stage?</p>
+        <button id="reload-page-btn" style="
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        ">Continue to Final Stage</button>
+    `;
+
+    }
+    else{
+         modal.innerHTML = `
+        <h2 style="color: #2c3e50; margin-bottom: 20px;">🎉 Winner Saved Successfully!</h2>
+        <p style="margin-bottom: 25px; color: #555;">This stage is complete. Ready to continue to the next stage?</p>
+        <button id="reload-page-btn" style="
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        ">Continue to Next Stage</button>
+    `;
+
+    }
+   
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    
+    // Add click handler for reload button
+    document.getElementById('reload-page-btn').addEventListener('click', function() {
+        window.location.reload();
+    });
+    
+    // Optional: Close modal when clicking outside
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            document.body.removeChild(overlay);
+        }
+    });
+}
+
+
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
 }

@@ -579,6 +579,16 @@ function save_winner(id){
             console.error('Error:', error);
         });
     }
+    else{
+               fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner'})
+               });
+    }
 }
 
 function showReloadWindow() {

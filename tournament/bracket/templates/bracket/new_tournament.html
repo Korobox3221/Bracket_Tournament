@@ -15,11 +15,11 @@
                 <h2 class='section-title'>Bracket Details</h2>
                 <div class='input-group'>
                     <label for="bracket_name">Tournament Name</label>
-                    <input type='text' id="bracket_name" name='bracket_name' placeholder="Best CS2 player tournament" required>
+                    <input autocomplete ="off"  type='text' id="bracket_name" name='bracket_name' placeholder="Best CS2 player tournament" required>
                 </div>
                 <div class='input-group'>
                     <label for="bracket_img">Cover Image URL</label>
-                    <input type='text' id="bracket_img" name='bracket_img' placeholder="https://example.com/tournament.jpg">
+                    <input autocomplete="off" type='text' id="bracket_img" name='bracket_img' placeholder="https://example.com/tournament.jpg">
                     <p class='input-hint'>Optional banner image for your tournament</p>
                 </div>
                 <div class='input-group'>
@@ -29,6 +29,7 @@
                         <option value="8">8 Participants</option>
                         <option value="16">16 Participants</option>
                         <option value="32">32 Participants</option>
+                        <option value="128">128 Participants</option>
                     </select>
                 </div>
             </div>

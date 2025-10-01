@@ -446,7 +446,7 @@
     },
     {
         "name": "Grand Theft Auto IV",
-        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/b7/Grand_Theft_Auto_IV_cover.jpgg",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/b7/Grand_Theft_Auto_IV_cover.jpg",
         "youtubeUrl": "https://www.youtube.com/watch?v=kOZ8bRAO7YQ"
     },
     {
@@ -461,13 +461,13 @@
     },
     {
         "name": "Silent Hill 2",
-        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2056250/capsule_616x353.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=uHp2ZDd66mU"
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/9/95/Silent_Hill_2.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=dk7JkSArEdQ"
     },
     {
         "name": "Call of Duty Modern Warfare 2",
         "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/10180/capsule_616x353.jpg",
-        "youtubeUrl": "https://www.youtube.com/watch?v=oMlva6rnT8s"
+        "youtubeUrl": "https://www.youtube.com/watch?v=blshENwbHgs"
     },
     {
         "name": "Resident Evil 2",

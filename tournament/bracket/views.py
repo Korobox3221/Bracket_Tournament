@@ -77,7 +77,7 @@ def new_tournament(request):
     if request.method == 'POST':
         img = request.POST['bracket_img']
         bracket_name = request.POST['bracket_name']
-        amount_of_participants = request.POST['stages_input']
+        amount_of_participants = request.POST['stages']
         bracket_creator = request.user
         bracket_id = bracket_name + str(request.user.id)
         participant_names = request.POST.getlist('participants')
@@ -186,7 +186,39 @@ def new_tournament(request):
                          top_left_quater_top, top_left_quater_bot, top_right_quater_top, top_right_quater_bot, bot_right_quater_top, bot_right_quater_bot, bot_left_quater_top, bot_left_quater_bot,
                          top_left_quater_top, top_left_quater_bot, top_right_quater_top, top_right_quater_bot, bot_right_quater_top, bot_right_quater_bot, bot_left_quater_top, bot_left_quater_bot,
                          top_left_quater_top, top_left_quater_bot, top_right_quater_top, top_right_quater_bot, bot_right_quater_top, bot_right_quater_bot, bot_left_quater_top, bot_left_quater_bot]
+        elif len(participant_names) == 128:
+            stage = '1/64'
+            first_left_top = (6.6, True)
+            first_left_bot = (17.6, True)
 
+            first_right_top = (6.6,  False)
+            first_right_bot = (17.6,  False)
+
+            second_left_top = (30.6, True)
+            second_left_bot = (41.6, True)
+
+            second_right_top = (30.6,  False)
+            second_right_bot = (41.6,  False)
+
+            third_left_top = (54.6, True)
+            third_left_bot = (65.6, True)
+
+            third_right_top = (54.6,  False)
+            third_right_bot = (65.6,  False)
+        
+            fourth_left_top = (78.6, True)
+            fourth_left_bot = (89.6, True)
+
+            fourth_right_top = (78.6,  False)
+            fourth_right_bot = (89.6,  False)
+            positions = [first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot
+                         ,first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top,third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot,
+                         first_left_top, first_left_bot, first_right_top, first_right_bot, second_left_top, second_left_bot, second_right_top, second_right_bot, third_left_top, third_left_bot, third_right_top, third_right_bot, fourth_left_top, fourth_left_bot, fourth_right_top, fourth_right_bot]
         for i, (name, url, video_url) in enumerate(zip(participant_names, participant_urls, participant_video_urls)):
             slot_row_semi, is_left_side = positions[i]
             video_url = get_youtube_id_from_url_regex(video_url)
@@ -211,12 +243,32 @@ def new_tournament(request):
                     group_position = 4
                 else:
                     continue  # Skip if out of range (shouldn't happen with 32 participants)
+            elif len(participant_names) == 128:
+                if i in range (0,16):
+                    group_position = 1
+                elif i in range(16, 32):  # Participants 8-15 (8 participants)
+                    group_position = 2
+                elif i in range(32, 48): # Participants 16-23 (8 participants)
+                    group_position = 3
+                elif i in range(48, 64): # Participants 24-31 (8 participants)
+                    group_position = 4
+                elif i in range(64, 80): # Participants 24-31 (8 participants)
+                    group_position = 5
+                elif i in range(80, 96): # Participants 24-31 (8 participants)
+                    group_position = 6
+                elif i in range(96, 112): # Participants 24-31 (8 participants)
+                    group_position = 7
+                elif i in range(112, 128): # Participants 24-31 (8 participants)
+                    group_position = 8
+                else:
+                    continue  # Skip if out of range (shouldn't happen with 32 participants)
                 
-                GroupParticipant.objects.create(
-                    bracket_name=br_name,
-                    obj_name=bracket_obj,
-                    group_position=group_position
-                )
+            GroupParticipant.objects.create(
+                bracket_name=br_name,
+                obj_name=bracket_obj,
+                group_position=group_position
+            )
+
         return HttpResponseRedirect("/")
 
     return render(request, "bracket/new_tournament.html")
@@ -224,6 +276,7 @@ def new_tournament(request):
 
 def bracket_view(request, id):
     try:
+        quater_winners = []
         semi_winners = []
         winner_finalists = []
         winner_winner = False
@@ -252,6 +305,8 @@ def bracket_view(request, id):
                     Participant_stages.objects.create(bracket_name = stage, obj_name = object, semi_final = True, user = user)
                 elif object.current_stage == '1/16':
                     Participant_stages.objects.create(bracket_name = stage, obj_name = object, quater_final= True, user = user)
+                elif object.current_stage == '1/64':
+                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, one_eight= True, user = user)
         if not GroupParticipant.objects.filter(bracket_name = stage, user = user):
             for group in groups:
                 GroupParticipant.objects.create(bracket_name = stage , obj_name = group.obj_name, group_position = group.group_position, user = user)
@@ -261,6 +316,7 @@ def bracket_view(request, id):
         for p in Participant_stages.objects.filter(bracket_name = stage, one_eight = True, user = user): one_eight.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, semi_winner = True, user = user): semi_winners.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, final_winner = True, user = user): winner_finalists.append(p.obj_name.obj_name)
+        for p in Participant_stages.objects.filter(bracket_name = stage, quater_winner = True, user = user): quater_winners.append(p.obj_name.obj_name)
         if len(winner_finalists) <2:
             winner_finalists.clear()
         if stage.amount_of_participants == 32:
@@ -270,13 +326,14 @@ def bracket_view(request, id):
                     group_2 = []
                     group_3 = []
                     group_4 = []
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 1):
+                    print( stage)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 1, bracket_name = stage):
                         group_1.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 2):
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 2, bracket_name = stage):
                         group_2.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 3):
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 3, bracket_name = stage):
                         group_3.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 4):
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 4, bracket_name = stage):
                         group_4.append(g.obj_name.obj_name)
                     if objects.filter(obj_name__in = group_1).filter(current_stage = 'winner').exists():
                         current_group = 2
@@ -286,7 +343,7 @@ def bracket_view(request, id):
                         current_group = 4
                     if objects.filter(current_stage = 'winner').count() == 4 or objects.filter(current_stage = 'winner_final').exists():
                         final_stage = True
-                    
+                    print(group_1)
 
                         
                     # Filter participants by the determined group
@@ -297,10 +354,10 @@ def bracket_view(request, id):
                     ).values_list('obj_name__obj_name', flat=True)
                     semis_check = objects.filter(current_stage = 'semi_final').filter(obj_name__in = group_participants)
 
-                    print(semis_check)
                     quater_finalists_names = [name for name in group_participants if name in quater_final]
                     semi_finalists_names = [name for name in group_participants if name in semi_final]
                     if len(semi_finalists_names)<4:
+
                         semi_finalists_names.clear()
                     finalists_names = [name for name in group_participants if name in final]
                     if len(finalists_names)< 2:
@@ -318,6 +375,80 @@ def bracket_view(request, id):
                     winners_finalists = objects.filter(obj_name__in=winner_finalists)
                     if objects.filter(current_stage = 'winner_winner').exists(): winner_winner = objects.get(current_stage = 'winner_winner')
 
+                    group = current_group
+        elif stage.amount_of_participants == 128:
+                    current_group = 1
+                    group_1 = []
+                    group_2 = []
+                    group_3 = []
+                    group_4 = []
+                    group_5= []
+                    group_6 = []
+                    group_7= []
+                    group_8= []
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 1):
+                        group_1.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 2):
+                        group_2.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 3):
+                        group_3.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 4):
+                        group_4.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 5):
+                        group_5.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 6):
+                        group_6.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 7):
+                        group_7.append(g.obj_name.obj_name)
+                    for g in GroupParticipant.objects.filter(user = user, group_position = 8):
+                        group_8.append(g.obj_name.obj_name)                                
+                    if objects.filter(obj_name__in = group_1).filter(current_stage = 'winner').exists():
+                        current_group = 2
+                    if objects.filter(obj_name__in = group_2).filter(current_stage = 'winner').exists():
+                        current_group = 3
+                    if objects.filter(obj_name__in = group_3).filter(current_stage = 'winner').exists():
+                        current_group = 4
+                    if objects.filter(obj_name__in = group_4).filter(current_stage = 'winner').exists():
+                        current_group = 5
+                    if objects.filter(obj_name__in = group_5).filter(current_stage = 'winner').exists():
+                        current_group = 6
+                    if objects.filter(obj_name__in = group_6).filter(current_stage = 'winner').exists():
+                        current_group = 7
+                    if objects.filter(obj_name__in = group_7).filter(current_stage = 'winner').exists():
+                        current_group = 8
+                    if objects.filter(current_stage = 'winner').count() == 8 or objects.filter(current_stage = 'winner_final').exists():
+                        final_stage = True
+                    
+
+                        
+                    # Filter participants by the determined group
+                    group_participants = GroupParticipant.objects.filter(
+                        bracket_name=stage,
+                        group_position=current_group,
+                        user=user
+                    ).values_list('obj_name__obj_name', flat=True)
+                    quater_finalists_names = [name for name in group_participants if name in quater_final]
+                    if len(quater_finalists_names)< 8:
+                        quater_finalists_names.clear()
+                    semi_finalists_names = [name for name in group_participants if name in semi_final]
+                    if len(semi_finalists_names)<4:
+                        semi_finalists_names.clear()
+                    finalists_names = [name for name in group_participants if name in final]
+                    if len(finalists_names)< 2:
+                        finalists_names.clear()
+                    one_eights_names = [name for name in group_participants if name in one_eight]
+                    
+
+                    # Now filter the objects using the combined list of names
+                    quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
+                    semi_finalists = objects.filter(obj_name__in=semi_finalists_names)
+                    finalists = objects.filter(obj_name__in=finalists_names)
+                    one_eights = objects.filter(obj_name__in=one_eights_names)
+
+                    winners = objects.filter(obj_name__in=quater_winners)
+                    winners_semi = objects.filter(obj_name__in=semi_winners)
+                    winners_finalists = objects.filter(obj_name__in=winner_finalists)
+                    if objects.filter(current_stage = 'winner_winner').exists(): winner_winner = objects.get(current_stage = 'winner_winner')
                     group = current_group
         else:
             finalists = objects.filter(obj_name__in=final)
@@ -376,6 +507,23 @@ def bracket_view(request, id):
                     'winners': winners,
                     'winners_finalists': winners_finalists,
                     'winner_winner': winner_winner})
+    elif stage.amount_of_participants == 128:
+        return render(request, "bracket/bracket_view_128.html",
+                    {'stage': stage,
+                    'id':id,
+                    'objects': objects,
+                    'finalists':finalists,
+                    'semi_finalists': semi_finalists,
+                    'winner':winner,
+                    'quater_finalists': quater_finalists,
+                    'user': user,
+                    'group' : group,
+                    'final_stage': final_stage,
+                    'winners': winners,
+                    'winners_finalists': winners_finalists,
+                    'winner_winner': winner_winner,
+                    'one_eights': one_eights,
+                    'winners_semi': winners_semi})
 def error(request, message):
     return render(request, "bracket/error.html", {
         'message': message
@@ -423,6 +571,9 @@ def object_api(request, id):
             if 'current_stage' in request.data:
                 new_stage = request.data['current_stage']
                 bracket_name = updated_obj.bracket_name
+                bracket = Bracket.objects.get(bracket_name = bracket_name.bracket_name)
+                amount_of_participants = int(bracket.amount_of_participants)
+                # amount_of_partiticpants = 
                 if new_stage == 'quater_final':
                     quater_finalists_count = Bracket_object.objects.filter(
                         bracket_name=bracket_name,
@@ -498,19 +649,44 @@ def object_api(request, id):
                 
                 # Final → Winner transition
                 elif new_stage == 'winner':
-                    # Обновляем Participant_stages
-                    Participant_stages.objects.update_or_create(
-                        obj_name=updated_obj,
-                        bracket_name=bracket_name,
-                        user=request.user,
-                        defaults={
-                            'winner': True,
-                            'final': True,
-                            'semi_final': True,
-                            'quater_final': True,
-                            'semi_winner': True
-                        }
-                    )
+                    if amount_of_participants == 32:
+                        Participant_stages.objects.update_or_create(
+                            obj_name=updated_obj,
+                            bracket_name=bracket_name,
+                            user=request.user,
+                            defaults={
+                                'winner': True,
+                                'final': True,
+                                'semi_final': True,
+                                'quater_final': True,
+                                'semi_winner': True
+                            }
+                        )
+                    elif amount_of_participants == 128:
+                        Participant_stages.objects.update_or_create(
+                            obj_name=updated_obj,
+                            bracket_name=bracket_name,
+                            user=request.user,
+                            defaults={
+                                'winner': True,
+                                'final': True,
+                                'semi_final': True,
+                                'quater_final': True,
+                                'quater_winner': True
+                            }
+                        )
+                    else:
+                        Participant_stages.objects.update_or_create(
+                            obj_name=updated_obj,
+                            bracket_name=bracket_name,
+                            user=request.user,
+                            defaults={
+                                'winner': True,
+                                'final': True,
+                                'semi_final': True,
+                                'quater_final': True,
+                            }
+                        )
                 elif new_stage == 'winner_final':
                     # Обновляем Participant_stages
                     Participant_stages.objects.update_or_create(
