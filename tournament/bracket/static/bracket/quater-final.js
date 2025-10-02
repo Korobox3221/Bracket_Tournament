@@ -167,7 +167,7 @@ function placeSemiFinalist() {
     const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value)
     
     // Calculate position based on which quarter-final we're processing
-    if (amount_of_participants === 8 || amount_of_participants === 32){
+    if (amount_of_participants === 8 || amount_of_participants === 32|| amount_of_participants === 128 && final_stage == 'True'){
     const topPosition_top = '29%';
     const topPosition_bot = '48.8%';
     const leftPosition_right = '77.2%';
@@ -257,7 +257,7 @@ function placeSemiFinalist() {
     save_semi_finalists(obj_id, slotRowSemi);}
 
 
-    else if(amount_of_participants === 16){
+    else if(amount_of_participants === 16 || amount_of_participants === 128 && final_stage == 'False'){
     const topPosition_top = '21%';
     const topPosition_bot = '68%';
     const leftPosition_right = '74%';
@@ -371,7 +371,7 @@ function placeFinalist() {
     clone.classList.add('finalist-clone');
     
     // Remove any conflicting inline styles from the clone
-    if (amount_of_participants === 8 || amount_of_participants === 32){
+    if (amount_of_participants === 8 || amount_of_participants === 32 || amount_of_participants === 128 && final_stage == 'True'){
     clone.style.cssText = `
         position: absolute;
         top: 36.2%;
@@ -404,7 +404,7 @@ function placeFinalist() {
     const obj_id = selectedParticipant.dataset.id;
     save_finalists(obj_id);}
 
-    else if (amount_of_participants === 16){
+    else if (amount_of_participants === 16 || amount_of_participants === 128 && final_stage == 'False'){
     clone.style.cssText = `
         position: absolute;
         top: 40%;
@@ -456,7 +456,7 @@ function placeChampion() {
     const img = selectedParticipant.querySelector('img').cloneNode(true);
     const name = selectedParticipant.querySelector('.obj_name').cloneNode(true);
     const amount_of_participants = parseInt(document.getElementById('amount_of_participants').value)
-    if (amount_of_participants === 8 || amount_of_participants === 32){
+    if (amount_of_participants === 8 || amount_of_participants === 32 || amount_of_participants === 128 && final_stage == 'True'){
     img.style.width = '150px';
     img.style.height = '150px';
     name.style.fontSize = '17px';
@@ -475,7 +475,7 @@ function placeChampion() {
     document.getElementById('final-pick').hidden = true;
     const obj_id = selectedParticipant.dataset.id;
     save_winner(obj_id);}
-    else if (amount_of_participants === 16){
+    else if (amount_of_participants === 16 || amount_of_participants === 128 && final_stage == 'False'){
 
     img.style.width = '135px';
     img.style.height = '135px';
@@ -508,7 +508,22 @@ function closeModal() {
 document.addEventListener('DOMContentLoaded', initializeEventListeners);
 
 function save_semi_finalists(id, slotRowSemi) {
-    fetch(`/object/${id}`, {
+    if (amount_of_participants === 128 && final_stage == 'True'){
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'semi_winner', semi_coords: slotRowSemi
+         })
+    });
+
+
+    }
+    else{
+
+        fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -518,10 +533,24 @@ function save_semi_finalists(id, slotRowSemi) {
             semi_coords: slotRowSemi,
          })
     });
+    }
+
 }
 
 function save_finalists(id) {
-    fetch(`/object/${id}`, {
+    if (amount_of_participants === 128 && final_stage == 'True'){
+        fetch(`/object/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ current_stage: 'winner_final' })
+    });
+    }
+    else{
+
+        fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -529,6 +558,9 @@ function save_finalists(id) {
         },
         body: JSON.stringify({ current_stage: 'final' })
     });
+        
+    }
+
 }
 
 function save_winner(id){  
@@ -579,6 +611,83 @@ function save_winner(id){
             console.error('Error:', error);
         });
     }
+    else if (amount_of_participants === 128 && final_stage == 'True'){
+        fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner_winner'})
+               });
+
+    }
+        else if (amount_of_participants === 128 && final_stage == 'False'){
+          const group = parseInt(document.getElementById('group').value);
+        is_left_side = 0;
+        slot_row_semi = 0;
+        if (group === 1){
+             slot_row_semi = 32.5;
+             is_left_side = true;
+
+        }
+        else if(group === 2){
+             slot_row_semi = 18;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 32.5;
+             is_left_side = false;
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 18;
+             is_left_side = false;
+
+        }
+        else if (group === 5){
+             slot_row_semi = 47.2;
+             is_left_side = false;
+
+        }
+        else if(group === 6){
+             slot_row_semi = 61.8;
+             is_left_side = false;
+
+        }
+
+        else if (group ===7){
+             slot_row_semi = 47.2;
+             is_left_side = true;
+
+        }
+        else if (group === 8){
+             slot_row_semi = 61.8;
+             is_left_side = true;
+
+        }
+       fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show reload window after successful save
+                showReloadWindow();
+            } else {
+                console.error('Failed to save winner');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            });}
+
     else{
                fetch(`/object/${id}`, {
             method: 'PUT',

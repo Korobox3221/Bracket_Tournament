@@ -212,7 +212,7 @@ function placeFinalist() {
     }
 
     }
-    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False'){
+    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False' || amount_of_participants === 128 && final_stage == 'True'){
         clone.style.cssText = `
         position: absolute;
         top: 36.2%;
@@ -250,7 +250,7 @@ function placeFinalist() {
         document.getElementById('final-pick').hidden = false;
     }
     }
-    else if (amount_of_participants === 16){
+    else if (amount_of_participants === 16 || amount_of_participants === 128 && final_stage == 'False'){
     clone.style.cssText = `
         position: absolute;
         top: 40%;
@@ -331,7 +331,7 @@ function placeChampion() {
             gap: 10px;
         `;
     } 
-    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False') {
+    else if (amount_of_participants === 8 || amount_of_participants === 32 && final_stage == 'False' || amount_of_participants === 128 && final_stage == 'True') {
         // Styles for 8-participant bracket
         img.style.cssText = 'width: 120px; height: 120px;';
         name.style.cssText = 'font-size: 15px; margin: 8px 0;';
@@ -349,7 +349,7 @@ function placeChampion() {
         `;
     }
 
-        else if (amount_of_participants === 16) {
+        else if (amount_of_participants === 16 || amount_of_participants === 128 && final_stage == 'False') {
         // Styles for 8-participant bracket
         img.style.cssText = 'width: 135px; height: 135px;';
         name.style.cssText = 'font-size: 17px;';
@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', initializeEventListeners);
         
         
 function save_finalists(id){
-    if (amount_of_participants === 32 && final_stage == 'True'){
+    if (amount_of_participants === 32 && final_stage == 'True' || amount_of_participants === 128 && final_stage == 'True'){
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -416,7 +416,7 @@ function save_finalists(id){
     }
 
 function save_winner(id){
-        if (amount_of_participants === 32 && final_stage == 'True'){
+        if (amount_of_participants === 32 && final_stage == 'True' || amount_of_participants === 128 && final_stage == 'True'){
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {
@@ -472,7 +472,74 @@ function save_winner(id){
             console.error('Error:', error);
         });
 
-    }else{  
+    }
+     else if (amount_of_participants === 128 && final_stage == 'False'){
+          const group = parseInt(document.getElementById('group').value);
+        is_left_side = 0;
+        slot_row_semi = 0;
+        if (group === 1){
+             slot_row_semi = 32.5;
+             is_left_side = true;
+
+        }
+        else if(group === 2){
+             slot_row_semi = 18;
+             is_left_side = true;
+
+        }
+
+        else if (group ===3){
+             slot_row_semi = 32.5;
+             is_left_side = false;
+
+        }
+        else if (group === 4 ){
+             slot_row_semi = 18;
+             is_left_side = false;
+
+        }
+        else if (group === 5){
+             slot_row_semi = 47.2;
+             is_left_side = false;
+
+        }
+        else if(group === 6){
+             slot_row_semi = 61.8;
+             is_left_side = false;
+
+        }
+
+        else if (group ===7){
+             slot_row_semi = 47.2;
+             is_left_side = true;
+
+        }
+        else if (group === 8){
+             slot_row_semi = 61.8;
+             is_left_side = true;
+
+        }
+       fetch(`/object/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCSRFToken()
+            },
+            body: JSON.stringify({ current_stage: 'winner', slot_row_semi: slot_row_semi, is_left_side: is_left_side })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show reload window after successful save
+                showReloadWindow();
+            } else {
+                console.error('Failed to save winner');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            });}
+
+    else{  
         fetch(`/object/${id}`, {
         method: 'PUT',
         headers: {

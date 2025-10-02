@@ -315,10 +315,39 @@ def bracket_view(request, id):
         for p in Participant_stages.objects.filter(bracket_name = stage, quater_final = True, user = user): quater_final.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, one_eight = True, user = user): one_eight.append(p.obj_name.obj_name)
         for p in Participant_stages.objects.filter(bracket_name = stage, semi_winner = True, user = user): semi_winners.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, final_winner = True, user = user): winner_finalists.append(p.obj_name.obj_name)
+        for p in Participant_stages.objects.filter(bracket_name = stage, final_winner = True, user = user): winner_finalists.append(p.obj_name.obj_name) 
         for p in Participant_stages.objects.filter(bracket_name = stage, quater_winner = True, user = user): quater_winners.append(p.obj_name.obj_name)
         if len(winner_finalists) <2:
+            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = winner_finalists))
+            participants.update(final_winner = False)
             winner_finalists.clear()
+        if len(semi_winners)<4:
+            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_winners))
+            participants.update(semi_winner = False)
+            semi_winners.clear()
+        if len(quater_final)<8:
+            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = quater_final))
+            participants.update(quater_final = False)
+            (objects.filter( obj_name__in = quater_final)).update(current_stage = '1/8')
+            quater_final.clear()
+        if len(semi_final)<4:
+            print(semi_final)
+            print(len(semi_final))
+            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_final))
+            participants.update(semi_final = False)
+            (objects.filter( obj_name__in = semi_final)).update(current_stage = 'quater_final')
+            semi_final.clear()
+        if len(final)<2:
+            participants = Participant_stages.objects.filter(obj_name__in = objects.filter(obj_name__in = final))
+            participants.update(final = False)
+            (objects.filter(obj_name__in = final)).update(current_stage = 'semi_final')
+            final.clear  
+            print(final)
+            print(len(final))
+
+            
+                      
+
         if stage.amount_of_participants == 32:
                     # Determine which group to display based on the winners in each group
                     current_group = 1
@@ -326,7 +355,6 @@ def bracket_view(request, id):
                     group_2 = []
                     group_3 = []
                     group_4 = []
-                    print( stage)
                     for g in GroupParticipant.objects.filter(user = user, group_position = 1, bracket_name = stage):
                         group_1.append(g.obj_name.obj_name)
                     for g in GroupParticipant.objects.filter(user = user, group_position = 2, bracket_name = stage):
@@ -343,7 +371,6 @@ def bracket_view(request, id):
                         current_group = 4
                     if objects.filter(current_stage = 'winner').count() == 4 or objects.filter(current_stage = 'winner_final').exists():
                         final_stage = True
-                    print(group_1)
 
                         
                     # Filter participants by the determined group
@@ -416,7 +443,7 @@ def bracket_view(request, id):
                         current_group = 7
                     if objects.filter(obj_name__in = group_7).filter(current_stage = 'winner').exists():
                         current_group = 8
-                    if objects.filter(current_stage = 'winner').count() == 8 or objects.filter(current_stage = 'winner_final').exists():
+                    if objects.filter(current_stage = 'winner').count() == 8 or objects.filter(current_stage = 'semi_winner').exists():
                         final_stage = True
                     
 
@@ -428,16 +455,10 @@ def bracket_view(request, id):
                         user=user
                     ).values_list('obj_name__obj_name', flat=True)
                     quater_finalists_names = [name for name in group_participants if name in quater_final]
-                    if len(quater_finalists_names)< 8:
-                        quater_finalists_names.clear()
                     semi_finalists_names = [name for name in group_participants if name in semi_final]
-                    if len(semi_finalists_names)<4:
-                        semi_finalists_names.clear()
                     finalists_names = [name for name in group_participants if name in final]
-                    if len(finalists_names)< 2:
-                        finalists_names.clear()
+
                     one_eights_names = [name for name in group_participants if name in one_eight]
-                    
 
                     # Now filter the objects using the combined list of names
                     quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
@@ -579,23 +600,23 @@ def object_api(request, id):
                         bracket_name=bracket_name,
                         current_stage='quater_final',
                     ).count()
-                    if quater_finalists_count == 8:
-                        quater_finalists = Bracket_object.objects.filter(
+                
+                    quater_finalists = Bracket_object.objects.filter(
+                        bracket_name=bracket_name,
+                        current_stage='quater_final'
+                    )
+                    for participant in quater_finalists:
+                        # Update Participant_stages with position data
+                        Participant_stages.objects.update_or_create(
+                            obj_name=participant,
                             bracket_name=bracket_name,
-                            current_stage='quater_final'
-                        )
-                        for participant in quater_finalists:
-                            # Update Participant_stages with position data
-                            Participant_stages.objects.update_or_create(
-                                obj_name=participant,
-                                bracket_name=bracket_name,
-                                user = request.user,
-                                defaults={
-                                    'one_eight': True,
-                                    'quater_final': True
-                                    
-                                }
-                            )   
+                            user = request.user,
+                            defaults={
+                                'one_eight': True,
+                                'quater_final': True
+                                
+                            }
+                        )   
 
 
                 # Quarter-final → Semi-final transition
@@ -605,22 +626,22 @@ def object_api(request, id):
                         current_stage='semi_final'
                     ).count()
                     
-                    if semi_finalists_count >= 4:
-                        semi_finalists = Bracket_object.objects.filter(
+                    
+                    semi_finalists = Bracket_object.objects.filter(
+                        bracket_name=bracket_name,
+                        current_stage='semi_final'
+                    )
+                    for participant in semi_finalists:
+                        # Update Participant_stages with position data
+                        Participant_stages.objects.update_or_create(
+                            obj_name=participant,
                             bracket_name=bracket_name,
-                            current_stage='semi_final'
+                            user = request.user,
+                            defaults={
+                                'semi_final': True,
+                                'quater_final': True
+                            }
                         )
-                        for participant in semi_finalists:
-                            # Update Participant_stages with position data
-                            Participant_stages.objects.update_or_create(
-                                obj_name=participant,
-                                bracket_name=bracket_name,
-                                user = request.user,
-                                defaults={
-                                    'semi_final': True,
-                                    'quater_final': True
-                                }
-                            )
 
                 
                 # Semi-final → Final transition
@@ -629,23 +650,21 @@ def object_api(request, id):
                         bracket_name=bracket_name,
                         current_stage='final'
                     ).count()
-                    
-                    if finalists_count >= 2:
-                        finalists = Bracket_object.objects.filter(
+                    finalists = Bracket_object.objects.filter(
+                    bracket_name=bracket_name,
+                    current_stage='final'
+                    )
+                    for participant in finalists:
+                        Participant_stages.objects.update_or_create(
+                            obj_name=participant,
                             bracket_name=bracket_name,
-                            current_stage='final'
+                            user = request.user,
+                            defaults={
+                                'final': True,
+                                'semi_final': True,
+                                'quater_final': True
+                            }
                         )
-                        for participant in finalists:
-                            Participant_stages.objects.update_or_create(
-                                obj_name=participant,
-                                bracket_name=bracket_name,
-                                user = request.user,
-                                defaults={
-                                    'final': True,
-                                    'semi_final': True,
-                                    'quater_final': True
-                                }
-                            )
                 
                 # Final → Winner transition
                 elif new_stage == 'winner':
@@ -687,6 +706,20 @@ def object_api(request, id):
                                 'quater_final': True,
                             }
                         )
+                elif new_stage == 'semi_winner':
+                    Participant_stages.objects.update_or_create(
+                        obj_name=updated_obj,
+                        bracket_name=bracket_name,
+                        user=request.user,
+                        defaults={
+                            'winner': True,
+                            'final': True,
+                            'semi_final': True,
+                            'quater_final': True,
+                            'semi_winner': True
+                        }
+                    )
+
                 elif new_stage == 'winner_final':
                     # Обновляем Participant_stages
                     Participant_stages.objects.update_or_create(

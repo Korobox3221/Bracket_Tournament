@@ -285,13 +285,13 @@ body, html {
             {% for obj in semi_finalists %}
             <div data-youtube-id="{{obj.video_url}}" class="participant-slot" 
                 data-id="{{ obj.id }}"
-                style="top: {{ obj.semi_coords}}%; 
-                        left: {{ obj.is_left_side|yesno:'22.9,77.2' }}%;
-                        width:112px;
-                        height: 110px;">
-                <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
-                <div style = 'width:112px; height: 110px;'class="participant-box">
-                    <img style = 'width:85px; height:85px;' src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                style="top: {{ obj.semi_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'25.7,74' }}%;
+                        width: 95px;
+                        height: 95px;">
+                <span style = "font-size: 13px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = 'padding: 2px; width:92px; height: 92px;'class="participant-box">
+                    <img style = 'width:78px; height:78px;' src="{{ obj.img }}" alt="{{ obj.obj_name }}">
                 </div>
             </div>
             {% endfor %}
