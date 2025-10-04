@@ -15,6 +15,7 @@ body, html {
 }
 </style>
 <input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'></input>
+<input hidden id = 'final_stage' value = '{{final_stage}}'></input>
 {% if not semi_finalists %}
     <div class="bracket-wrapper">
         <img src="{% static 'bracket/images/quater-final.png' %}" class="bracket-bg" alt="Tournament Bracket">
@@ -26,7 +27,7 @@ body, html {
             <button class="pick-button" id="right-pick-bot">Pick</button>
             <button hidden style = 'bottom: 58.4%; left: 36%;'  class="pick-button" id="left-pick">Pick</button>
             <button hidden style = 'bottom: 58.4%; right: 36%;'   class="pick-button" id="right-pick">Pick</button>
-            <button hidden style = 'bottom: 35%; left: 49.5%;' hidden class="pick-button" id="final-pick">Pick</button>
+            <button hidden style = 'bottom: 33.5%; left: 49.6%;' hidden class="pick-button" id="final-pick">Pick</button>
         </div>
         
         {% for obj in quater_finalists %}
@@ -53,7 +54,7 @@ body, html {
         <div class="button-container">
             <button style = 'bottom: 58.4%; left: 36%;'  class="pick-button" id="left-pick">Pick</button>
             <button style = 'bottom: 58.4%; right: 36%;'   class="pick-button" id="right-pick">Pick</button>
-            <button style = 'bottom: 35%; left: 49.5%;' hidden class="pick-button" id="final-pick">Pick</button>
+            <button style = 'bottom: 33.5%; left: 49.6%;' hidden class="pick-button" id="final-pick">Pick</button>
         </div>
          {% for obj in quater_finalists %}
         <div data-youtube-id="{{obj.video_url}}" class="quater_final_slot_8" 
@@ -87,7 +88,7 @@ body, html {
             <div class="button-container">
                 <button hidden class="pick-button" id="left-pick">Pick</button>
                 <button hidden class="pick-button" id="right-pick">Pick</button>
-                <button style = 'bottom: 35%; left: 49.5%;' class="pick-button" id="final-pick">Pick</button>
+                <button style = 'bottom: 33.5%; left: 49.6%;' class="pick-button" id="final-pick">Pick</button>
             </div>
 
             <img src="{% static 'bracket/images/quater-final.png' %}" class="bracket-bg" alt="Tournament Bracket">

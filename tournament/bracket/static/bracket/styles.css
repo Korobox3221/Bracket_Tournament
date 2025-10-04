@@ -530,12 +530,12 @@
     font-size: 11px;
 }
 
-.finalist_name{
+.finalist-name{
     display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: bold;
-    font-size: 15px;
+   
 
 }

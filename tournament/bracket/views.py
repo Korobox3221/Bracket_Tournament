@@ -243,6 +243,11 @@ def new_tournament(request):
                     group_position = 4
                 else:
                     continue  # Skip if out of range (shouldn't happen with 32 participants)
+                GroupParticipant.objects.create(
+                bracket_name=br_name,
+                obj_name=bracket_obj,
+                group_position=group_position
+            )
             elif len(participant_names) == 128:
                 if i in range (0,16):
                     group_position = 1
@@ -263,11 +268,11 @@ def new_tournament(request):
                 else:
                     continue  # Skip if out of range (shouldn't happen with 32 participants)
                 
-            GroupParticipant.objects.create(
-                bracket_name=br_name,
-                obj_name=bracket_obj,
-                group_position=group_position
-            )
+                GroupParticipant.objects.create(
+                    bracket_name=br_name,
+                    obj_name=bracket_obj,
+                    group_position=group_position
+                )
 
         return HttpResponseRedirect("/")
 
@@ -321,32 +326,31 @@ def bracket_view(request, id):
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = winner_finalists))
             participants.update(final_winner = False)
             winner_finalists.clear()
-        if len(semi_winners)<4:
-            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_winners))
-            participants.update(semi_winner = False)
+        if stage.amount_of_participants == 128:   
+            if len(semi_winners)<4:
+                participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_winners))
+                participants.update(semi_winner = False)
             semi_winners.clear()
-        if len(quater_final)<8:
+        if len(quater_final)>1 and len(quater_final)<8:
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = quater_final))
             participants.update(quater_final = False)
             (objects.filter( obj_name__in = quater_final)).update(current_stage = '1/8')
             quater_final.clear()
-        if len(semi_final)<4:
+        if len(semi_final)>1 and len(semi_final)<4:
             print(semi_final)
             print(len(semi_final))
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_final))
             participants.update(semi_final = False)
             (objects.filter( obj_name__in = semi_final)).update(current_stage = 'quater_final')
             semi_final.clear()
-        if len(final)<2:
+        if len(final)>=1 and len(final)<2:
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter(obj_name__in = final))
             participants.update(final = False)
             (objects.filter(obj_name__in = final)).update(current_stage = 'semi_final')
             final.clear  
             print(final)
             print(len(final))
-
-            
-                      
+        print(objects.filter(current_stage = 'winner').count())
 
         if stage.amount_of_participants == 32:
                     # Determine which group to display based on the winners in each group
@@ -372,7 +376,7 @@ def bracket_view(request, id):
                     if objects.filter(current_stage = 'winner').count() == 4 or objects.filter(current_stage = 'winner_final').exists():
                         final_stage = True
 
-                        
+                    
                     # Filter participants by the determined group
                     group_participants = GroupParticipant.objects.filter(
                         bracket_name=stage,
@@ -459,7 +463,6 @@ def bracket_view(request, id):
                     finalists_names = [name for name in group_participants if name in final]
 
                     one_eights_names = [name for name in group_participants if name in one_eight]
-
                     # Now filter the objects using the combined list of names
                     quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
                     semi_finalists = objects.filter(obj_name__in=semi_finalists_names)
@@ -477,6 +480,7 @@ def bracket_view(request, id):
             quater_finalists = objects.filter(obj_name__in=quater_final)
             one_eights = objects.filter(obj_name__in=one_eight)
             if objects.filter(current_stage = 'winner').exists(): winner = objects.get(current_stage = 'winner')
+            print(winner)
     except ObjectDoesNotExist:
         message = 'This bracket does not exist'
         return HttpResponseRedirect(f'/error/{message}')
