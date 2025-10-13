@@ -1,0 +1,83 @@
+[
+    {
+        "name": "Disco Elysium: The Final Cut",
+        "imageUrl": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_DiscoElysiumTheFinalCut_image1600w.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=nk_K5DM0UTk"
+    },
+    {
+        "name": "Half-Life 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/220/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=UKA7JkV51Jw"
+    },
+    {
+        "name": "Grand Theft Auto V",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=QkkoHAzjnUs"
+    },
+    {
+        "name": "Baldur's Gate 3",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=1T22wNvoNiU"
+    },
+    {
+        "name": "Half-Life",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/70/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=5Wavn29LMrs&pp=ygURdHJhaWxlciBIYWxmLUxpZmU%3D"
+    },
+    {
+        "name": "BioShock",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/7670/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rrqfPG4ZcAA"
+    },
+    {
+        "name": "Hades II",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Hades_2_cover_art.jpeg/250px-Hades_2_cover_art.jpeg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WzJ_UhPptBQ&pp=ygUPdHJhaWxlciBIYWRlcyAy0gcJCesJAYcqIYzv"
+    },
+    {
+        "name": "Portal 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/620/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=tax4e4hBBZc"
+    },
+    {
+        "name": "The Elder Scrolls V: Skyrim",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/72850/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=JSRtYpNRoN0"
+    },
+    {
+        "name": "Subnautica",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/264710/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Rz2SNm8VguE"
+    },
+    {
+        "name": "Grand Theft Auto: Vice City",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=BcqMaYdYow0&pp=ygUVdHJhaWxlciBndGEgdmljZSBjaXR50gcJCesJAYcqIYzv"
+    },
+    {
+        "name": "Quake",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2310/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=DV2vhmtGBqM"
+    },
+    {
+        "name": "BioShock Infinite",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/8870/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WYRePGtK074"
+    },
+    {
+        "name": "The Elder Scrolls IV: Oblivion",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/22330/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=qJnnPh44Rlo"
+    },
+    {
+        "name": "Elden Ring",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=E3Huy2cdih0"
+    },
+    {
+        "name": "Grim Fandango",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/7/76/Grim_Fandango_artwork.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=hV1NBHL9Fa4&pp=ygUVZ3JpbSBmYW5kYW5nbyB0cmFpbGVy"
+    }
+
+]

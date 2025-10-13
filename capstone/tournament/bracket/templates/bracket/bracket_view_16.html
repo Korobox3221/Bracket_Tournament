@@ -1,0 +1,304 @@
+{% extends "bracket/layout.html"%}
+{% block body %}
+{% load static %}
+<style>
+body, html {
+  height: 100%;
+}
+
+.bg {
+  background-image: url("{% static 'bracket/images/semi-final.png' %}");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+<input hidden id = 'amount_of_participants' value = '{{stage.amount_of_participants}}'>
+<input hidden id = 'final_stage' value = '{{final_stage}}'></input>
+<input hidden id = 'user_id' value = '{{user.id}}'>
+{% if not quater_finalists %}
+        <div class="bracket-wrapper">
+        <img src="{% static 'bracket/images/1_8.png' %}" class="bracket-bg" alt="Tournament Bracket">
+        
+        <div class="button-container">
+            <button   class="pick-button" id="first-left">Pick</button>
+            <button   class="pick-button" id="second-left">Pick</button>
+            <button   class="pick-button" id="third-left">Pick</button>
+            <button   class="pick-button" id="fourth-left">Pick</button>
+            <button   class="pick-button" id="first-right">Pick</button>
+            <button   class="pick-button" id="second-right">Pick</button>
+            <button   class="pick-button" id="third-right">Pick</button>
+            <button   class="pick-button" id="fourth-right">Pick</button>
+
+            <button hidden style="bottom: 74.5%; left: 23.2%; width: 55px; height: 35px"  class="pick-button" id="left-pick-top">Pick</button>
+            <button hidden style="bottom: 27%; left: 23.2%; width: 55px; height: 35px" class="pick-button" id="left-pick-bot">Pick</button>
+            <button hidden style="bottom: 74.5%; left: 71.5%; width: 55px; height: 35px" class="pick-button" id="right-pick-top">Pick</button>
+            <button hidden style="bottom: 27%; left: 71.5%; width: 55px; height: 35px" class="pick-button" id="right-pick-bot">Pick</button>
+
+            <button hidden style = 'bottom: 54.5%; left: 34.6%; width: 65px;'  class="pick-button" id="left-pick">Pick</button>
+            <button hidden style = 'bottom: 54.5%; right: 35%; width: 65px;'   class="pick-button" id="right-pick">Pick</button>
+            <button hidden style = 'bottom: 30%; left: 50.2%; height: 45px;' hidden class="pick-button" id="final-pick">Pick</button>
+        </div>
+        
+        {% for obj in one_eights %}
+        <div data-youtube-id="{{obj.video_url}}" class="one_eight_slot" 
+            data-id="{{ obj.id }}"
+            style="top: {{ obj.slot_row_semi }}%; 
+                    left: {{ obj.is_left_side|yesno:'3.35,96.6' }}%;">
+            <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+            <div class="one_eight_box">
+                <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    {% if not semi_finalists %}
+        <div class="bracket-wrapper">
+            <img src="{% static 'bracket/images/1_8.png' %}" class="bracket-bg" alt="Tournament Bracket">
+            
+            <div class="button-container">
+                <button style="bottom: 74.5%; left: 23.2%; width: 55px; height: 35px"  class="pick-button" id="left-pick-top">Pick</button>
+                <button style="bottom: 27%; left: 23.2%; width: 55px; height: 35px" class="pick-button" id="left-pick-bot">Pick</button>
+                <button style="bottom: 74.5%; left: 71.5%; width: 55px; height: 35px" class="pick-button" id="right-pick-top">Pick</button>
+                <button style="bottom: 27%; left: 71.5%; width: 55px; height: 35px" class="pick-button" id="right-pick-bot">Pick</button>
+
+                <button hidden style = 'bottom: 54.5%; left: 34.6%; width: 65px;'  class="pick-button" id="left-pick">Pick</button>
+                <button hidden style = 'bottom: 54.5%; right: 35%; width: 65px;'   class="pick-button" id="right-pick">Pick</button>
+                <button hidden style = 'bottom: 30%; left: 50.2%; height: 45px;' hidden class="pick-button" id="final-pick">Pick</button>
+            </div>
+             {% for obj in one_eights %}
+                <div data-youtube-id="{{obj.video_url}}" class="one_eight_slot" 
+                    data-id="{{ obj.id }}"
+                    style="top: {{ obj.slot_row_semi }}%; 
+                            left: {{ obj.is_left_side|yesno:'3.35,96.6' }}%;">
+                    <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                    <div class="one_eight_box">
+                        <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                    </div>
+                </div>
+            {% endfor %}
+            {% for obj in quater_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="quater_final_slot_8" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.quater_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'10.6,89.4' }}%;
+                        width: 80px;
+                        height: 80px;">
+                <span style = "font-size: 11px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = "padding: 2px; width: 75px; height: 75px;" class="quater_final_box_8">
+                    <img  style = " margin-bottom: 0px; width: 65px; height: 65px;" src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+
+        {% if not finalists %}
+
+
+        <div class="bracket-wrapper">
+            <img src="{% static 'bracket/images/1_8.png' %}" class="bracket-bg" alt="Tournament Bracket">
+            
+            <div class="button-container">
+                <button  style = 'bottom: 54.5%; left: 34.6%; width: 65px;'  class="pick-button" id="left-pick">Pick</button>
+                <button  style = 'bottom: 54.5%; right: 35%; width: 65px;'   class="pick-button" id="right-pick">Pick</button>
+                <button  style = 'bottom: 30%; left: 50.2%; height: 45px;' hidden class="pick-button" id="final-pick">Pick</button>
+            </div>
+             {% for obj in one_eights %}
+                <div data-youtube-id="{{obj.video_url}}" class="one_eight_slot" 
+                    data-id="{{ obj.id }}"
+                    style="top: {{ obj.slot_row_semi }}%; 
+                            left: {{ obj.is_left_side|yesno:'3.35,96.6' }}%;">
+                    <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                    <div class="one_eight_box">
+                        <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                    </div>
+                </div>
+            {% endfor %}
+            {% for obj in quater_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="quater_final_slot_8" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.quater_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'10.6,89.4' }}%;
+                        width: 80px;
+                        height: 80px;">
+                <span style = "font-size: 11px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = "padding: 2px; width: 75px; height: 75px;" class="quater_final_box_8">
+                    <img  style = " margin-bottom: 0px; width: 65px; height: 65px;" src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+            {% for obj in semi_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="participant-slot" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.semi_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'25.7,74' }}%;
+                        width: 95px;
+                        height: 95px;">
+                <span style = "font-size: 13px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = 'padding: 2px; width:92px; height: 92px;'class="participant-box">
+                    <img style = 'width:78px; height:78px;' src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% else %}
+            {% if not winner %}
+            <div class="bracket-wrapper">
+                <div class="button-container">
+                    <button hidden class="pick-button" id="left-pick">Pick</button>
+                    <button hidden class="pick-button" id="right-pick">Pick</button>
+                    <button  style = 'bottom: 30%; left: 50.2%; height: 45px;' class="pick-button" id="final-pick">Pick</button>
+                </div>
+
+                <img src="{% static 'bracket/images/1_8.png' %}" class="bracket-bg" alt="Tournament Bracket">
+                
+                <!-- Original Participants (hidden or shown as needed) -->
+
+             {% for obj in one_eights %}
+                <div data-youtube-id="{{obj.video_url}}" class="one_eight_slot" 
+                    data-id="{{ obj.id }}"
+                    style="top: {{ obj.slot_row_semi }}%; 
+                            left: {{ obj.is_left_side|yesno:'3.35,96.6' }}%;">
+                    <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                    <div class="one_eight_box">
+                        <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                    </div>
+                </div>
+            {% endfor %}
+            {% for obj in quater_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="quater_final_slot_8" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.quater_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'10.6,89.4' }}%;
+                        width: 80px;
+                        height: 80px;">
+                <span style = "font-size: 11px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = "padding: 2px; width: 75px; height: 75px;" class="quater_final_box_8">
+                    <img  style = " margin-bottom: 0px; width: 65px; height: 65px;" src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+            {% for obj in semi_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="participant-slot" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.semi_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'25.7,74' }}%;
+                        width: 95px;
+                        height: 95px;">
+                <span style = "font-size: 13px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = 'padding: 2px; width:92px; height: 92px;'class="participant-box">
+                    <img style = 'width:78px; height:78px;' src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+                <!-- Finalists -->
+                {% for finalist in finalists %}
+                <div data-youtube-id="{{finalist.video_url}}" class="finalist-slot"
+                    data-id="{{ finalist.id }}"
+                    style="top: 40%; 
+                            left: {{ finalist.is_left_side|yesno:'37.5,62.2' }}%;
+                            width: 115px;
+                            height: 115px;
+                            text-align: center;
+                            position: absolute;">
+                    <span style = 'font-size: 15px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;' class="finalist-name">{{ finalist.obj_name }}</span>
+                    <div style = 'width: 112px; height:115px;' class="finalist-box">
+                        <img style = 'width: 95px; height: 95px;'src="{{ finalist.img }}" alt="{{ finalist.obj_name }}">
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+                {% else %}
+            <div class="bracket-wrapper">
+                <div class="button-container">
+                <button hidden class="pick-button" id="left-pick">Pick</button>
+                <button hidden class="pick-button" id="right-pick">Pick</button>
+                <button hidden class="pick-button" id="final-pick">Pick</button>
+            </div>
+
+                <img src="{% static 'bracket/images/1_8.png' %}" class="bracket-bg" alt="Tournament Bracket">
+                
+                <!-- Original Participants (hidden or shown as needed) -->
+            
+             {% for obj in one_eights %}
+                <div data-youtube-id="{{obj.video_url}}" class="one_eight_slot" 
+                    data-id="{{ obj.id }}"
+                    style="top: {{ obj.slot_row_semi }}%; 
+                            left: {{ obj.is_left_side|yesno:'3.35,96.6' }}%;">
+                    <span class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                    <div class="one_eight_box">
+                        <img src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                    </div>
+                </div>
+            {% endfor %}
+            {% for obj in quater_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="quater_final_slot_8" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.quater_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'10.6,89.4' }}%;
+                        width: 80px;
+                        height: 80px;">
+                <span style = "font-size: 11px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = "padding: 2px; width: 75px; height: 75px;" class="quater_final_box_8">
+                    <img  style = " margin-bottom: 0px; width: 65px; height: 65px;" src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+            {% for obj in semi_finalists %}
+            <div data-youtube-id="{{obj.video_url}}" class="participant-slot" 
+                data-id="{{ obj.id }}"
+                style="top: {{ obj.semi_coords }}%; 
+                        left: {{ obj.is_left_side|yesno:'25.7,74' }}%;
+                        width: 95px;
+                        height: 95px;">
+                <span style = "font-size: 13px;" class="obj_name" title="{{ obj.obj_name }}">{{ obj.obj_name }}</span>
+                <div style = 'padding: 2px; width:92px; height: 92px;'class="participant-box">
+                    <img style = 'width:78px; height:78px;' src="{{ obj.img }}" alt="{{ obj.obj_name }}">
+                </div>
+            </div>
+            {% endfor %}
+                <!-- Finalists -->
+                {% for finalist in finalists %}
+                <div data-youtube-id="{{finalist.video_url}}" class="one_eight_slot"
+                    data-id="{{ finalist.id }}"
+                    style="top: 40%; 
+                            left: {{ finalist.is_left_side|yesno:'37.5,62.2' }}%;
+                            width: 115px;
+                            height: 115px;">
+                    <span style = 'font-size: 15px;' class="obj_name">{{ finalist.obj_name }}</span>
+                    <div style = 'width: 112px; height:115px;' class="one_eight_box">
+                        <img style = 'width: 95px; height: 95px;'src="{{ finalist.img }}" alt="{{ finalist.obj_name }}">
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="participant-slot original-participant"
+                    data-id="{{ winner.id }}"
+                    style="top: 80.5%; left: 58.75%;
+                    height: 200px; width: 200px;"> 
+                    <div class="champion" style = " width: 200px; height: 200px;">
+                        <span style = 'font-size: 17px'; class="obj_name">{{ winner.obj_name }}</span>
+                        <img style="width: 135px; height: 135px;" src="{{ winner.img }}" alt="{{ winner.obj_name }}">
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+<div class="selection-modal" id="selection-modal">
+    <div class="modal-content">
+        <h3>Select Winner</h3>
+        <div id="participant-options"></div>
+        <button class="select-button" id="confirm-selection">Confirm</button>
+    </div>
+</div>
+{% csrf_token %}
+<script src="{% static 'bracket/' %}{% if not quater_finalists %}one_eight{% elif not semi_finalists %}quater-final{% elif not finalists%}semi-final{% else %}final{% endif %}.js"></script>
+{% endblock %}

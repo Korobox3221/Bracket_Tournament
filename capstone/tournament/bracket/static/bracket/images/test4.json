@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Disco Elysium: The Final Cut",
+        "imageUrl": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_DiscoElysiumTheFinalCut_image1600w.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=nk_K5DM0UTk"
+    },
+    {
+        "name": "Half-Life 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/220/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=UKA7JkV51Jw"
+    },
+    {
+        "name": "Grand Theft Auto V",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=QkkoHAzjnUs"
+    },
+    {
+        "name": "Baldur's Gate 3",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=1T22wNvoNiU"
+    }
+]

@@ -44,11 +44,11 @@ The handling of the **32-participant bracket** adds another layer of complexity.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Korobox3221/Bracket_Tournament.git
-    cd tournament
+    git clone <YOUR_REPOSITORY_URL>
+    cd <your_project_folder_name>
     ```
 2.  **Install dependencies:**
-    ```bashcd
+    ```bash
     pip install -r requirements.txt
     ```
 3.  **Apply database migrations:**

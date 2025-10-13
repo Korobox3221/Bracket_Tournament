@@ -1,0 +1,642 @@
+[
+    {
+        "name": "Disco Elysium: The Final Cut",
+        "imageUrl": "https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_DiscoElysiumTheFinalCut_image1600w.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=nk_K5DM0UTk"
+    },
+    {
+        "name": "Half-Life 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/220/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=UKA7JkV51Jw"
+    },
+    {
+        "name": "Grand Theft Auto V",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=QkkoHAzjnUs"
+    },
+    {
+        "name": "Baldur's Gate 3",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=1T22wNvoNiU"
+    },
+    {
+        "name": "Half-Life",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/70/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=5Wavn29LMrs&pp=ygURdHJhaWxlciBIYWxmLUxpZmU%3D"
+    },
+    {
+        "name": "BioShock",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/7670/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rrqfPG4ZcAA"
+    },
+    {
+        "name": "Hades II",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Hades_2_cover_art.jpeg/250px-Hades_2_cover_art.jpeg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WzJ_UhPptBQ&pp=ygUPdHJhaWxlciBIYWRlcyAy0gcJCesJAYcqIYzv"
+    },
+    {
+        "name": "Portal 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/620/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=tax4e4hBBZc"
+    },
+    {
+        "name": "The Elder Scrolls V: Skyrim",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/72850/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=JSRtYpNRoN0"
+    },
+    {
+        "name": "Subnautica",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/264710/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Rz2SNm8VguE"
+    },
+    {
+        "name": "Grand Theft Auto: Vice City",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/ce/Vice-city-cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=BcqMaYdYow0&pp=ygUVdHJhaWxlciBndGEgdmljZSBjaXR50gcJCesJAYcqIYzv"
+    },
+    {
+        "name": "Quake",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2310/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=DV2vhmtGBqM"
+    },
+    {
+        "name": "BioShock Infinite",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/8870/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=WYRePGtK074"
+    },
+    {
+        "name": "The Elder Scrolls IV: Oblivion",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/22330/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=qJnnPh44Rlo"
+    },
+    {
+        "name": "Elden Ring",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=E3Huy2cdih0"
+    },
+    {
+        "name": "Grim Fandango",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/7/76/Grim_Fandango_artwork.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=hV1NBHL9Fa4&pp=ygUVZ3JpbSBmYW5kYW5nbyB0cmFpbGVy"
+    },
+    {
+        "name": "Diablo",
+        "imageUrl": "https://i.pinimg.com/736x/2d/8a/4b/2d8a4bde98b3e8a4d3516eb8f8694add.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=o_Kr5i5F43U"
+    },
+    {
+        "name": "The Witcher 3: Wild Hunt",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=c0i88t0Kacs"
+    },
+    {
+        "name": "Half-Life: Alyx",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/546560/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=O2W0N3uKXmo"
+    },
+    {
+        "name": "Divinity: Original Sin II",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/435150/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=bTWTFX8qzPI"
+    },
+    {
+        "name": "Starcraft II",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/2/20/StarCraft_II_-_Box_Art.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=aVtXac6if14"
+    },
+    {
+        "name": "God of War",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1593500/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=K0u_kAWLJOA"
+    },
+    {
+        "name": "Minecraft",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/ru/archive/f/f4/20221113131206%21Minecraft_Cover_Art.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=MmB9b5njVbA"
+    },
+    {
+        "name": "Red Dead Redemption 2",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=gmA6MrX81z4"
+    },
+    {
+        "name": "Grand Theft Auto III",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/be/GTA3boxcover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ygdtkkCFxkE"
+    },
+    {
+        "name": "Beat Saber",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/620980/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=vL39Sg2AqWg"
+    },
+    {
+        "name": "Hades",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=91t0ha9x0AE"
+    },
+    {
+        "name": "Star Wars: Knights of the Old Republic",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/32370/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=dKCfyMRRyWE"
+    },
+    {
+        "name": "World of Warcraft",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-lQyJBkO6vcLSt2a0opKYZlwxeif3bGNsdQ&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=vlVSJ0AvZe0"
+    },
+    {
+        "name": "Grand Theft Auto: San Andreas",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/12120/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=yOzcbtsw_pQ"
+    },
+    {
+        "name": "Call of Duty 4: Modern Warfare",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/5/5f/Call_of_Duty_4_Modern_Warfare.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=LhuIjNSg7Gg"
+    },
+    {
+        "name": "The Sims",
+        "imageUrl": "https://i.imgur.com/DG1TAkD.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=8yLpvhNfoWA"
+    },
+    {
+        "name": "Team Fortress 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/440/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=N7ZafWA2jd8"
+    },
+    {
+        "name": "System Shock 2",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/9/91/Systemshock2box.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=a3__6BknDHc"
+    },
+    {
+        "name": "Elden Ring: Shadow of the Erdtree",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2778580/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=6uT8wGtB3yQ"
+    },
+    {
+        "name": "Rome: Total War",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/4760/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=wDr2PQh_Lzs"
+    },
+    {
+        "name": "Blue Prince",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2619880/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=jdRnQzfp2ks"
+    },
+    {
+        "name": "Eve Online",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/8500/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=sPFII3ozSHI"
+    },
+    {
+        "name": "Undertale",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/391540/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=1Hojv0m3TqA"
+    },
+    {
+        "name": "Doom Eternal",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/782330/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=FkklG9MA0vM"
+    },
+    {
+        "name": "Hollow Knight: Silksong",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=UAO2urG23S4"
+    },
+    {
+        "name": "The Witcher 2: Assassins of Kings",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/20920/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=HedLjjlSy3Y"
+    },
+    {
+        "name": "Counter Strike",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/10/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=edYCtaNueQY"
+    },
+    {
+        "name": "Fallout 2",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/c3/PC_Game_Fallout_2.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=nWtzCrpU_iA"
+    },
+    {
+        "name": "Dishonored",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/205100/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=84lBk4Gp9g8"
+    },
+    {
+        "name": "Heroes of Might and Magic III",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9b/Homm3boxart.jpg/250px-Homm3boxart.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=vdJRKWfzpuA"
+    },
+    {
+        "name": "Baldur's Gate",
+        "imageUrl": "https://cdn.cloudflare.steamstatic.com/steam/apps/228280/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=xXw1XdAS_ds"
+    },
+    {
+        "name": "Overwatch",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/5/51/Overwatch_cover_art.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=FqnKB22pOC0"
+    },
+    {
+        "name": "Tekken 8",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1778820/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=2hPuRQz6IlM"
+    },
+    {
+        "name": "Metal Gear Solid V: The Phantom Pain",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/287700/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=A9JV0EvCkMI"
+    },
+    {
+        "name": "Tom Clancy's Splinter Cell",
+        "imageUrl": "https://cdn.mobygames.com/covers/3889351-tom-clancys-splinter-cell-playstation-2-front-cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rhL5Je-JqqQ"
+    },
+    {
+        "name": "Fallout: New Vegas",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/22380/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=l-x-1fm2cq8"
+    },
+    {
+        "name": "Crysis",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/e/e9/Crysis_Cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ea5-3f5TkBs"
+    },
+    {
+        "name": "BioShock 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/8850/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=tzWTcDydlpM"
+    },
+    {
+        "name": "Tony Hawk's Pro Skater 2",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/4/41/Tony_Hawk%27s_Pro_Skater_2_cover.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Q_KJvfeJGYg"
+    },
+    {
+        "name": "Batman: Arkham Asylum",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/35140/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=T8bu2Y_cZb8"
+    },
+    {
+        "name": "Crusader Kings III",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1158310/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=xjn66Cl3pMA"
+    },
+    {
+        "name": "Plants Vs Zombies",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/9/9c/PlantsvsZombiesCoverArt.jpg/250px-PlantsvsZombiesCoverArt.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=CHAbHz8iYHc"
+    },
+    {
+        "name": "Fallout 3",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/22370/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=iYZpR51XgW0"
+    },
+    {
+        "name": "Batman: Arkham City",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/200260/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=MlX--IPxTRU"
+    },
+    {
+        "name": "Resident Evil 4",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/d/d9/Resi4-gc-cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=1KTghW30ZuY"
+    },
+    {
+        "name": "Hitman: Blood Money",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/6860/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=DW5COFJtnhE"
+    },
+    {
+        "name": "Dragon Age: Origins",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/47810/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=mRcrlgN7Dk4"
+    },
+    {
+        "name": "Clair Obscur: Expedition 33",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/Clair_Obscur%2C_Expedition_33_Cover_1.webp/250px-Clair_Obscur%2C_Expedition_33_Cover_1.webp.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=2VaLOc1FpSo&t=18s"
+    },
+    {
+        "name": "Dark Souls II",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/236430/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=U6uyuIQYlfY"
+    },
+    {
+        "name": "Max Payne 3",
+        "imageUrl": "https://media.rockstargames.com/rockstargames/img/global/news/upload/maxpayne3_coverart2.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=4Uc_dbG7MR8"
+    },
+    {
+        "name": "Satisfactory",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/526870/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Jt4XOPiPJHs"
+    },
+    {
+        "name": "Call of Duty",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/7/7c/Call_Of_Duty_%282003%29%2CCover%2CUpdated.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=9Ft9hgxFsNM"
+    },
+    {
+        "name": "Balatro",
+        "imageUrl": "https://cdn.mobygames.com/covers/19339043-balatro-xbox-one-front-cover.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=VUyP21iQ_-g"
+    },
+    {
+        "name": "Outer Wilds",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/f/f6/Outer_Wilds_Steam_artwork.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=d6LGnVCL1_A"
+    },
+    {
+        "name": "Call of duty 2",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/d/d1/Call_of_Duty_2_Box.jpg/250px-Call_of_Duty_2_Box.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Yh9V77xd8o8"
+    },
+    {
+        "name": "Factorio",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/427520/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=J8SBp4SyvLc"
+    },
+    {
+        "name": "Middle-earth: Shadow of War",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/356190/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=bhSfjt8jQyk"
+    },
+    {
+        "name": "Spelunky",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/239350/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=_EvRRCvAU68"
+    },
+    {
+        "name": "Hotline Miami",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/f/f4/Hotline_Miami_cover.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=9BGYaP1S7w8"
+    },
+    {
+        "name": "Portal",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/400/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=TluRVBhmf8w"
+    },
+    {
+        "name": "Far Cry 3",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/220240/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=J6gnOVJsCsM"
+    },
+    {
+        "name": "Deus Ex",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/ba/Deus_Ex_%28game_box_art%29.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=f1RdKezTYNk"
+    },
+    {
+        "name": "Half-Life 2: Episode Two",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmdmDIOC9_qEEj6cXWAYGRxUGNs64g1-ufLg&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=n0l5N6Exjz0"
+    },
+    {
+        "name": "Sid Meier's Civilization III",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/ru/d/d4/Civilization3_cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=a-Ts-uaZDn4"
+    },
+    {
+        "name": "God of War: Ragnarok",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV9SUE0vmYe6iLTG1ayAkLrhMh6brdZlsrBA&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=EE-4GvjKcfs"
+    },
+    {
+        "name": "Bayonetta",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/460790/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=HiD5TX3AZfE"
+    },
+    {
+        "name": "Sid Meier's Civilization V",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/8930/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=4lEfl_OebvQ"
+    },
+    {
+        "name": "Terraria",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/105600/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=w7uOhFTrrq0"
+    },
+    {
+        "name": "Hollow Knight",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/367520/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=UAO2urG23S4"
+    },
+    {
+        "name": "The Stanley Parable: Ultra Deluxe",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1703340/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=SLOP7xTyUA8"
+    },
+    {
+        "name": "Deus Ex: Human Revolution",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/28050/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Kq5KWLqUewc"
+    },
+    {
+        "name": "The Last of Us Remastered",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu1eH3ugYyTQ8TBsC-loHt_q09hbipFmJ6_A&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=AaOWRvmtEFQ"
+    },
+    {
+        "name": "Dota 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/570/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=-cSFPIwMEq4"
+    },
+    {
+        "name": "Grand Theft Auto IV",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/b7/Grand_Theft_Auto_IV_cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=kOZ8bRAO7YQ"
+    },
+    {
+        "name": "Warcraft III: The Frozen Throne",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/ru/0/04/Warcraft_III_The_Frozen_Throne_Cover.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=iqB3KeiBLuw"
+    },
+    {
+        "name": "Command & Conquer: Red Alert",
+        "imageUrl": "https://preview.redd.it/why-does-red-alert-1-have-different-cover-art-for-na-vs-eu-v0-lhrgm7x80aja1.png?width=437&format=png&auto=webp&s=e57109d7c7228e55a62aad0263954306495aa5bd",
+        "youtubeUrl": "https://www.youtube.com/watch?v=y0tsV2p3svM"
+    },
+    {
+        "name": "Silent Hill 2",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/9/95/Silent_Hill_2.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=dk7JkSArEdQ"
+    },
+    {
+        "name": "Call of Duty Modern Warfare 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/10180/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=blshENwbHgs"
+    },
+    {
+        "name": "Resident Evil 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/883710/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=u3wS-Q2KBpk"
+    },
+    {
+        "name": "Devil May Cry 5",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/601150/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=KMSGj9Y2T9Q"
+    },
+    {
+        "name": "The Walking Dead: A Telltale Games Series",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/207610/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=JOMScEpwaFI"
+    },
+    {
+        "name": "Mafia 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/50130/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=wHoqwphzhzc"
+    },
+    {
+        "name": "Super Meat Boy",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/40800/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=snaionoxjos"
+    },
+    {
+        "name": "Dark Souls III",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/374320/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=cWBwFhUv1-8"
+    },
+    {
+        "name": "The Elder Scrolls III: Morrowind",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/22320/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Cr3TCWPlDrw"
+    },
+    {
+        "name": "Fallout",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/38400/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=60vqfUQHqc0"
+    },
+    {
+        "name": "Pizza Tower",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2231450/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Wlq6fFOqI28"
+    },
+    {
+        "name": "Dead Cells",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/588650/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=RvGaSPTcTxc"
+    },
+    {
+        "name": "Slay the Spire",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/646570/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=9SZUtyYSOjQ"
+    },
+    {
+        "name": "Left 4 Dead",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/500/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=qwoEVFqzV_s"
+    },
+    {
+        "name": "Left 4 Dead 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/550/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=9XIle_kLHKU"
+    },
+    {
+        "name": "Mass Effect",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1328670/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=n8i53TtQ6IQ"
+    },
+    {
+        "name": "Black Myth: Wukong",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/a/a6/Black_Myth_Wukong_cover_art.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=pnSsgRJmsCc"
+    },
+    {
+        "name": "Uncharted 4",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1659420/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=hh5HV4iic1Y"
+    },
+    {
+        "name": "Journey",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGiZb4cIrDYxgQlhmDg66VhkW8gZ150I6knw&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=mU3nNT4rcFg"
+    },
+    {
+        "name": "Cyberpunk 2077",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=qIcTM8WXFjk"
+    },
+    {
+        "name": "Borderlands 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/49520/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=0Z8alrPzspA"
+    },
+    {
+        "name": "Max Payne",
+        "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqrmM8IXDm4qWwMwFlLk2rXtN_S_t7I4Glyw&s",
+        "youtubeUrl": "https://www.youtube.com/watch?v=Pgg3VG7Hug8"
+    },
+    {
+        "name": "Far Cry",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/ru/3/32/Far_Cry_coverart.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=NeyY5P35ARs"
+    },
+    {
+        "name": "Cuphead",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/268910/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=NN-9SQXoi50"
+    },
+    {
+        "name": "XCOM: Enemy Unknown",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/200510/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=jrOQIiuFM-o"
+    },
+    {
+        "name": "The Binding of Isaac",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/113200/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=27Le3kOOFQk"
+    },
+    {
+        "name": "Battlefield 3",
+        "imageUrl": "https://cdn.europosters.eu/image/1300/11404.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=9DM7NsxOS0Q"
+    },
+    {
+        "name": "Battlefield 1942",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/ru/3/3e/Battlefield_1942.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=C81n-UMGgoM"
+    },
+    {
+        "name": "It Takes Two",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1426210/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ohClxMmNLQQ"
+    },
+    {
+        "name": "Ghost of Tsushima: Director's Cut",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/2215430/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=A5gVt028Hww"
+    },
+    {
+        "name": "Stardew Valley",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/413150/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ot7uXNQskhs"
+    },
+    {
+        "name": "Mafia",
+        "imageUrl": "https://i.redd.it/2h8a8vr0cpi71.png",
+        "youtubeUrl": "https://www.youtube.com/watch?v=TjzZFcqyhIg"
+    },
+    {
+        "name": "Sekiro: Shadows Die Twice",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/814380/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=rXMX4YJ7Lks"
+    },
+    {
+        "name": "Assassin's Creed 2",
+        "imageUrl": "https://cdn.akamai.steamstatic.com/steam/apps/33230/capsule_616x353.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=_xkCPNECud8"
+    },
+    {
+        "name": "Kingdom Come: Deliverance II",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/Kingdom_Come_Deliverance_II.jpg/250px-Kingdom_Come_Deliverance_II.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ju8R8gwD-Vg"
+    },
+    {
+        "name": "F.E.A.R.",
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/1/15/FEAR_DVD_box_art.jpg/250px-FEAR_DVD_box_art.jpg",
+        "youtubeUrl": "https://www.youtube.com/watch?v=ylyf9dfp2-c"
+    }
+]
