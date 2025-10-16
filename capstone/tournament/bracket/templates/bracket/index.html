@@ -40,7 +40,7 @@
             <img src="https://www.svgrepo.com/show/346699/tournament.svg" class="empty-icon">
             <h3>No Brackets Available</h3>
             <p>Create a new tournament to get started</p>
-            <a href="/create-bracket" class="create-button">Create Bracket</a>
+            <a href="{% if not user.is_authenticated %}{% url 'login' %}{% else %}/create-bracket{% endif %}" class="create-button">Create Bracket</a>
         </div>
         {% endfor %}
     </div>
