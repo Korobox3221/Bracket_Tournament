@@ -38,7 +38,7 @@ class Bracket_object(models.Model):
 
 class Participant_stages(models.Model):
      bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True, related_name = 'br_name')
-     obj_name  = models.ForeignKey(Bracket_object, on_delete=models.CASCADE, blank = True, null=True)
+     obj_name  = models.ForeignKey(Bracket_object, on_delete=models.CASCADE, blank = True, null=True, db_index=True)
      quater_final = models.BooleanField(default=False)
      semi_final = models.BooleanField(default=False)
      final = models.BooleanField(default=False)
@@ -53,7 +53,7 @@ class Participant_stages(models.Model):
      
 class GroupParticipant(models.Model):
     bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True)
-    obj_name  = models.ForeignKey(Bracket_object, on_delete=models.CASCADE, blank = True, null=True)
+    obj_name  = models.ForeignKey(Bracket_object, on_delete=models.CASCADE, blank = True, null=True, db_index=True)
     group_position = models.IntegerField()
     is_winner = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
