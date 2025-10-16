@@ -24,7 +24,7 @@ class Bracket(models.Model):
 
 class Bracket_object(models.Model):
     obj_name = models.CharField(max_length = 100)
-    current_stage = models.CharField(max_length=20, default='semi-final')
+    current_stage = models.CharField(max_length=20, default='semi-final', db_index=True)
     bracket_name = models.ForeignKey(Bracket, on_delete=models.CASCADE, blank = True, null=True, related_name = 'brack_name')
     img = models.CharField(max_length = 1000)
     slot_row_semi = models.FloatField(default=1)
