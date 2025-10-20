@@ -27,6 +27,28 @@ DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',') 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # <-- THIS IS THE KEY SETTING
+            'propagate': True,
+        },
+        # You may need to set your app's logger level explicitly:
+        'my_app_name': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 # Application definition
 if os.environ.get('DB_HOST'):
