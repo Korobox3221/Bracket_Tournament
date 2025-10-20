@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'default-fallback-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',') 
 
