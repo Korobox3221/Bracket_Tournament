@@ -331,12 +331,12 @@ def bracket_view(request, id):
                 participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_winners))
                 participants.update(semi_winner = False)
             semi_winners.clear()
-        if len(quater_final)>1 and len(quater_final)<8:
+        if len(quater_final)>=1 and len(quater_final)<8:
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = quater_final))
             participants.update(quater_final = False)
             (objects.filter( obj_name__in = quater_final)).update(current_stage = '1/8')
             quater_final.clear()
-        if len(semi_final)>1 and len(semi_final)<4:
+        if len(semi_final)>=1 and len(semi_final)<4:
             print(semi_final)
             print(len(semi_final))
             participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_final))
