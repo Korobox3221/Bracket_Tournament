@@ -2,7 +2,7 @@
 
 {% block body %}
 <div class='tournament-creator'>
-    <form method='POST' class='tournament-form'>
+    <form method='POST' class='tournament-form' id='create-tournament-form'>
         {% csrf_token %}
         <div class='form-header'>
             <h1>Create New Tournament</h1>
@@ -10,12 +10,11 @@
         </div>
         
         <div class='form-grid'>
-            <!-- Bracket Info Section -->
             <div class='form-section'>
                 <h2 class='section-title'>Bracket Details</h2>
                 <div class='input-group'>
                     <label for="bracket_name">Tournament Name</label>
-                    <input autocomplete ="off"  type='text' id="bracket_name" name='bracket_name' placeholder="Best CS2 player tournament" required>
+                    <input autocomplete ="off"  type='text' id="bracket_name" name='bracket_name' placeholder="Best CS2 player tournament" required>
                 </div>
                 <div class='input-group'>
                     <label for="bracket_img">Cover Image URL</label>
@@ -34,7 +33,6 @@
                 </div>
             </div>
             
-            <!-- Participants Section -->
             <div class='form-section'>
                 <h2 class='section-title'>Participants</h2>
                 <div class='upload-card'>
@@ -49,7 +47,6 @@
                         <input type="file" id="json-file-input" accept=".json,.csv" style="display: none;">
                     </div>
                     
-                    <!-- Scrollable Participants Container -->
                     <div class="participants-scroll-container">
                         <div id="participants-container" class='participants-list'>
                             <div class='empty-state'>
@@ -80,6 +77,13 @@
         </div>
     </form>
     
+    <div id="creating-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Creating new tournament...</p>
+            <p class="small-text">This may take a moment while participants are set up.</p>
+        </div>
+    </div>
     <div class='format-help'>
         <button type='button' class='help-button'>
             <svg class='help-icon' viewBox="0 0 24 24">
@@ -381,6 +385,47 @@
     color: #721c24;
 }
 
+#creating-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999; /* Higher z-index to cover everything */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#creating-overlay .loading-content p {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+#creating-overlay .small-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+}
+
+/* Reusing your existing spinner styles with a slight adjustment for the primary color */
+#creating-overlay .spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #2ecc71; /* Use the 'Create' button color */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 /* Submit Section */
 .submit-section {
     text-align: center;
@@ -529,6 +574,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const helpButton = document.querySelector('.help-button');
     const helpContent = document.querySelector('.help-content');
     
+    // --- NEW: Form element and Overlay element ---
+    const createTournamentForm = document.getElementById('create-tournament-form');
+    const creatingOverlay = document.getElementById('creating-overlay');
+    
     // Initialize
     participantsContainer.innerHTML = `<div class='empty-state'>
         <img src='https://www.svgrepo.com/show/346699/tournament.svg' class='empty-icon'>
@@ -572,6 +621,21 @@ document.addEventListener('DOMContentLoaded', function() {
         
         reader.readAsText(file);
     });
+    
+    // --- NEW: Intercept form submission ---
+    createTournamentForm.addEventListener('submit', function(e) {
+        const createButton = document.querySelector('.create-button');
+
+        // Check validation one last time
+        if (createButton.disabled) {
+            e.preventDefault();
+            return;
+        }
+
+        // Show the loading overlay
+        creatingOverlay.style.display = 'block'; // Using 'block' since we removed 'flex' from CSS
+    });
+    // ------------------------------------
 
     function updateParticipantRequirement() {
         const requiredCount = parseInt(participantSelect.value);
@@ -616,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
             participantCard.className = 'participant-card';
             participantCard.innerHTML = `
                 <img src="${participant.imageUrl}" alt="${participant.name}" class="participant-avatar" 
-                     onerror="this.src='https://via.placeholder.com/50x50?text=IMG'">
+                    onerror="this.src='https://via.placeholder.com/50x50?text=IMG'">
                 <div class="participant-info">
                     <div class="participant-name">${participant.name}</div>
                     <div class="participant-url">${participant.imageUrl}</div>
