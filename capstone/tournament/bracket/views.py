@@ -280,207 +280,215 @@ def new_tournament(request):
 
 
 def bracket_view(request, id):
+    # Initialize variables for the template context
+    quater_winners = []
+    semi_winners = []
+    winner_finalists = []
+    winner_winner = False
+    winners = []
+    winner = False
+    final = []
+    semi_final = []
+    quater_final = []
+    one_eight = []
+    final_stage = False
+    group = 1 # Initialize group display default to 1
+
     try:
-        quater_winners = []
-        semi_winners = []
-        winner_finalists = []
-        winner_winner = False
-        winners = []
-        winner = False
-        final = []
-        semi_final = []
-        quater_final = []
-        one_eight = []
-        final_stage = False
         user = request.user
-        stage = Bracket.objects.get(id = id)
-        objects = Bracket_object.objects.filter(bracket_name = stage, user__isnull=True)
-        groups = GroupParticipant.objects.filter(bracket_name = stage, user__isnull=True)
-        if not Bracket_object.objects.filter(bracket_name = stage, user = request.user):
-            for object in objects:
-                Bracket_object.objects.create(obj_name = object.obj_name, user = request.user, current_stage = object.current_stage, bracket_name = object.bracket_name, img = object.img, slot_row_semi = object.slot_row_semi, is_left_side = object.is_left_side, video_url = object.video_url )
-        objects = Bracket_object.objects.filter(bracket_name = stage, user = request.user)
-        if not Participant_stages.objects.filter(bracket_name = stage, user = request.user):
-            for object  in objects:
-                if object.current_stage == '1/8':
-                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, one_eight = True, user = user)
-                elif object.current_stage == 'quater_final':
-                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, quater_final= True, user = user)
-                elif object.current_stage == 'semi_final':
-                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, semi_final = True, user = user)
-                elif object.current_stage == '1/16':
-                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, quater_final= True, user = user)
-                elif object.current_stage == '1/64':
-                    Participant_stages.objects.create(bracket_name = stage, obj_name = object, one_eight= True, user = user)
-        if not GroupParticipant.objects.filter(bracket_name = stage, user = user):
-            for group in groups:
-                GroupParticipant.objects.create(bracket_name = stage , obj_name = group.obj_name, group_position = group.group_position, user = user)
-        for p in Participant_stages.objects.filter(bracket_name = stage, semi_final = True,user = user): semi_final.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, final = True, user = user): final.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, quater_final = True, user = user): quater_final.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, one_eight = True, user = user): one_eight.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, semi_winner = True, user = user): semi_winners.append(p.obj_name.obj_name)
-        for p in Participant_stages.objects.filter(bracket_name = stage, final_winner = True, user = user): winner_finalists.append(p.obj_name.obj_name) 
-        for p in Participant_stages.objects.filter(bracket_name = stage, quater_winner = True, user = user): quater_winners.append(p.obj_name.obj_name)
-        if len(winner_finalists) <2:
-            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = winner_finalists))
-            participants.update(final_winner = False)
-            winner_finalists.clear()
-        if stage.amount_of_participants == 128:   
-            if len(semi_winners)<4:
-                participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_winners))
-                participants.update(semi_winner = False)
-            semi_winners.clear()
-        if len(quater_final)>=1 and len(quater_final)<8:
-            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = quater_final))
-            participants.update(quater_final = False)
-            (objects.filter( obj_name__in = quater_final)).update(current_stage = '1/8')
+        # --- 1. Eagerly Load Stage and Setup Data (Minimal Queries) ---
+        stage = Bracket.objects.get(id=id)
+        
+        # Fetch template objects and check for user's existing data efficiently
+        template_objects = Bracket_object.objects.filter(bracket_name=stage, user__isnull=True)
+        user_objects_exists = Bracket_object.objects.filter(bracket_name=stage, user=user).exists()
+        
+        # --- 2. Batch Creation of User-Specific Data ---
+        
+        # A. Copy Bracket_object records if the user doesn't have them
+        if not user_objects_exists:
+            new_bracket_objects = [
+                Bracket_object(
+                    obj_name=obj.obj_name,
+                    user=user,
+                    current_stage=obj.current_stage,
+                    bracket_name=obj.bracket_name,
+                    img=obj.img,
+                    slot_row_semi=obj.slot_row_semi,
+                    is_left_side=obj.is_left_side,
+                    video_url=obj.video_url
+                ) for obj in template_objects
+            ]
+            with transaction.atomic():
+                Bracket_object.objects.bulk_create(new_bracket_objects)
+
+        # B. Get the user's *current* objects (Query 1: User's Bracket_objects)
+        objects = Bracket_object.objects.filter(bracket_name=stage, user=user)
+
+        # C. Copy Participant_stages records if the user doesn't have them
+        if not Participant_stages.objects.filter(bracket_name=stage, user=user).exists():
+            new_stages = []
+            for obj in objects:
+                # Use a dictionary to map current_stage to a boolean field name
+                stage_mapping = {
+                    '1/8': 'one_eight', 
+                    '1/64': 'one_eight', 
+                    'quater_final': 'quater_final', 
+                    '1/16': 'quater_final', 
+                    'semi_final': 'semi_final'
+                }
+                
+                stage_field = stage_mapping.get(obj.current_stage)
+                
+                if stage_field:
+                    defaults = {stage_field: True}
+                    new_stages.append(
+                        Participant_stages(
+                            bracket_name=stage, 
+                            obj_name=obj, 
+                            user=user,
+                            **defaults
+                        )
+                    )
+            with transaction.atomic():
+                Participant_stages.objects.bulk_create(new_stages)
+                
+        # D. Copy GroupParticipant records if the user doesn't have them
+        template_groups = GroupParticipant.objects.filter(bracket_name=stage, user__isnull=True)
+        if not GroupParticipant.objects.filter(bracket_name=stage, user=user).exists():
+            new_groups = [
+                GroupParticipant(
+                    bracket_name=stage,
+                    obj_name=group.obj_name,
+                    group_position=group.group_position,
+                    user=user
+                ) for group in template_groups
+            ]
+            with transaction.atomic():
+                GroupParticipant.objects.bulk_create(new_groups)
+
+
+        # --- 3. Aggregate Stage Data in ONE Query (Fixes N+1 Issue) ---
+        
+        # Query 2: Fetch ALL relevant stage data, eagerly loading the related Bracket_object
+        all_participants_stages = Participant_stages.objects.filter(
+            bracket_name=stage, 
+            user=user
+        ).select_related('obj_name') # <-- THIS IS THE KEY FIX
+
+        # Process the single QuerySet in Python, eliminating dozens of small queries
+        for p in all_participants_stages:
+            name = p.obj_name.obj_name
+            if p.semi_final: semi_final.append(name)
+            if p.final: final.append(name)
+            if p.quater_final: quater_final.append(name)
+            if p.one_eight: one_eight.append(name)
+            if p.semi_winner: semi_winners.append(name)
+            if p.final_winner: winner_finalists.append(name) 
+            if p.quater_winner: quater_winners.append(name)
+
+
+        # --- 4. Stage Progression/Correction Logic (Optimized for QuerySets) ---
+
+        # Correction 1: Reset final_winner if count is wrong
+        if len(winner_finalists) < 2 and len(winner_finalists) > 0:
+            # Get objects that match the winner names and reset their stage fields
+            objects.filter(obj_name__in=winner_finalists).update(current_stage='final')
+            Participant_stages.objects.filter(obj_name__obj_name__in=winner_finalists, user=user).update(final_winner=False)
+            winner_finalists.clear() 
+
+        # Correction 2: Reset semi_winner for 128 brackets if count is wrong
+        if stage.amount_of_participants == 128:
+            # Check the actual count before clearing
+            if len(semi_winners) < 4 and len(semi_winners) > 0:
+                objects.filter(obj_name__in=semi_winners).update(current_stage='winner')
+                Participant_stages.objects.filter(obj_name__obj_name__in=semi_winners, user=user).update(semi_winner=False)
+                semi_winners.clear()
+        
+        # Progression 1: Quater-final to 1/8 (if count is low)
+        # Note: Check changed from >= 1 and < 8 to just < 8 (as >= 1 is implicit if the list is non-empty)
+        if len(quater_final) > 0 and len(quater_final) < 8:
+            objects.filter(obj_name__in=quater_final).update(current_stage='1/8')
+            Participant_stages.objects.filter(obj_name__obj_name__in=quater_final, user=user).update(quater_final=False)
             quater_final.clear()
-        if len(semi_final)>=1 and len(semi_final)<4:
-            print(semi_final)
-            print(len(semi_final))
-            participants = Participant_stages.objects.filter(obj_name__in = objects.filter( obj_name__in = semi_final))
-            participants.update(semi_final = False)
-            (objects.filter( obj_name__in = semi_final)).update(current_stage = 'quater_final')
+
+        # Progression 2: Semi-final to Quater-final (if count is low)
+        if len(semi_final) > 0 and len(semi_final) < 4:
+            objects.filter(obj_name__in=semi_final).update(current_stage='quater_final')
+            Participant_stages.objects.filter(obj_name__obj_name__in=semi_final, user=user).update(semi_final=False)
             semi_final.clear()
-        if len(final)>=1 and len(final)<2:
-            participants = Participant_stages.objects.filter(obj_name__in = objects.filter(obj_name__in = final))
-            participants.update(final = False)
-            (objects.filter(obj_name__in = final)).update(current_stage = 'semi_final')
-            final.clear  
-            print(final)
-            print(len(final))
-        print(objects.filter(current_stage = 'winner').count())
+            
+        # Progression 3: Final to Semi-final (if count is low)
+        if len(final) > 0 and len(final) < 2:
+            objects.filter(obj_name__in=final).update(current_stage='semi_final')
+            Participant_stages.objects.filter(obj_name__obj_name__in=final, user=user).update(final=False)
+            final.clear()
 
-        if stage.amount_of_participants == 32:
-                    # Determine which group to display based on the winners in each group
-                    current_group = 1
-                    group_1 = []
-                    group_2 = []
-                    group_3 = []
-                    group_4 = []
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 1, bracket_name = stage):
-                        group_1.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 2, bracket_name = stage):
-                        group_2.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 3, bracket_name = stage):
-                        group_3.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 4, bracket_name = stage):
-                        group_4.append(g.obj_name.obj_name)
-                    if objects.filter(obj_name__in = group_1).filter(current_stage = 'winner').exists():
-                        current_group = 2
-                    if objects.filter(obj_name__in = group_2).filter(current_stage = 'winner').exists():
-                        current_group = 3
-                    if objects.filter(obj_name__in = group_3).filter(current_stage = 'winner').exists():
-                        current_group = 4
-                    if objects.filter(current_stage = 'winner').count() == 4 or objects.filter(current_stage = 'winner_final').exists():
-                        final_stage = True
+        # --- 5. Group Filtering Logic (32/128 Participants) ---
+        
+        if stage.amount_of_participants in [32, 128]:
+            
+            # Query 3: Fetch all group participants in one go
+            all_groups = GroupParticipant.objects.filter(bracket_name=stage, user=user)
+            
+            # Determine how many groups there are (32/8=4 groups; 128/8=16 groups)
+            num_groups = stage.amount_of_participants // 8 
+            
+            current_group = 1
+            # Check for the last completed group to determine which one to display next
+            for i in range(1, num_groups + 1):
+                group_participants_names = all_groups.filter(group_position=i).values_list('obj_name__obj_name', flat=True)
+                
+                # Check if a winner exists in this group's participants
+                if objects.filter(obj_name__in=group_participants_names, current_stage='winner').exists():
+                    current_group = i + 1
+                else:
+                    # Stop at the first group that isn't finished
+                    current_group = i
+                    break
+            
+            group = current_group # Set the group variable for context
 
-                    
-                    # Filter participants by the determined group
-                    group_participants = GroupParticipant.objects.filter(
-                        bracket_name=stage,
-                        group_position=current_group,
-                        user=user
-                    ).values_list('obj_name__obj_name', flat=True)
-                    semis_check = objects.filter(current_stage = 'semi_final').filter(obj_name__in = group_participants)
+            # Determine final_stage status
+            required_winners = 4 if stage.amount_of_participants == 32 else 8
+            if objects.filter(current_stage='winner').count() == required_winners or objects.filter(current_stage__in=['winner_final', 'semi_winner']).exists():
+                 final_stage = True
+            
+            # Re-filter group participants names based on the *determined* current_group
+            group_participants_names = all_groups.filter(
+                group_position=current_group
+            ).values_list('obj_name__obj_name', flat=True)
 
-                    quater_finalists_names = [name for name in group_participants if name in quater_final]
-                    semi_finalists_names = [name for name in group_participants if name in semi_final]
-                    if len(semi_finalists_names)<4:
+            # Filter the final lists for the template using list comprehensions against the group's names
+            quater_finalists_names = [name for name in group_participants_names if name in quater_final]
+            semi_finalists_names = [name for name in group_participants_names if name in semi_final]
+            finalists_names = [name for name in group_participants_names if name in final]
+            one_eights_names = [name for name in group_participants_names if name in one_eight]
 
-                        semi_finalists_names.clear()
-                    finalists_names = [name for name in group_participants if name in final]
-                    if len(finalists_names)< 2:
-                        finalists_names.clear()
-                    one_eights_names = [name for name in group_participants if name in one_eight]
+            # Re-filter the main 'objects' QuerySet based on these lists (efficiently done once here)
+            quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
+            semi_finalists = objects.filter(obj_name__in=semi_finalists_names)
+            finalists = objects.filter(obj_name__in=finalists_names)
+            one_eights = objects.filter(obj_name__in=one_eights_names)
 
+            # Get the winners for the group stage view
+            winners = objects.filter(obj_name__in=quater_winners)
+            winners_semi = objects.filter(obj_name__in=semi_winners)
+            winners_finalists = objects.filter(obj_name__in=winner_finalists)
+            
+            # Determine overall winner (Query 4, single object)
+            winner_winner = objects.filter(current_stage='winner_winner').first()
 
-                    # Now filter the objects using the combined list of names
-                    quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
-                    semi_finalists = objects.filter(obj_name__in=semi_finalists_names)
-                    finalists = objects.filter(obj_name__in=finalists_names)
-                    one_eights = objects.filter(obj_name__in=one_eights_names)
-
-                    winners = objects.filter(obj_name__in=semi_winners)
-                    winners_finalists = objects.filter(obj_name__in=winner_finalists)
-                    if objects.filter(current_stage = 'winner_winner').exists(): winner_winner = objects.get(current_stage = 'winner_winner')
-
-                    group = current_group
-        elif stage.amount_of_participants == 128:
-                    current_group = 1
-                    group_1 = []
-                    group_2 = []
-                    group_3 = []
-                    group_4 = []
-                    group_5= []
-                    group_6 = []
-                    group_7= []
-                    group_8= []
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 1):
-                        group_1.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 2):
-                        group_2.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 3):
-                        group_3.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 4):
-                        group_4.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 5):
-                        group_5.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 6):
-                        group_6.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 7):
-                        group_7.append(g.obj_name.obj_name)
-                    for g in GroupParticipant.objects.filter(user = user, group_position = 8):
-                        group_8.append(g.obj_name.obj_name)                                
-                    if objects.filter(obj_name__in = group_1).filter(current_stage = 'winner').exists():
-                        current_group = 2
-                    if objects.filter(obj_name__in = group_2).filter(current_stage = 'winner').exists():
-                        current_group = 3
-                    if objects.filter(obj_name__in = group_3).filter(current_stage = 'winner').exists():
-                        current_group = 4
-                    if objects.filter(obj_name__in = group_4).filter(current_stage = 'winner').exists():
-                        current_group = 5
-                    if objects.filter(obj_name__in = group_5).filter(current_stage = 'winner').exists():
-                        current_group = 6
-                    if objects.filter(obj_name__in = group_6).filter(current_stage = 'winner').exists():
-                        current_group = 7
-                    if objects.filter(obj_name__in = group_7).filter(current_stage = 'winner').exists():
-                        current_group = 8
-                    if objects.filter(current_stage = 'winner').count() == 8 or objects.filter(current_stage = 'semi_winner').exists():
-                        final_stage = True
-                    
-
-                        
-                    # Filter participants by the determined group
-                    group_participants = GroupParticipant.objects.filter(
-                        bracket_name=stage,
-                        group_position=current_group,
-                        user=user
-                    ).values_list('obj_name__obj_name', flat=True)
-                    quater_finalists_names = [name for name in group_participants if name in quater_final]
-                    semi_finalists_names = [name for name in group_participants if name in semi_final]
-                    finalists_names = [name for name in group_participants if name in final]
-
-                    one_eights_names = [name for name in group_participants if name in one_eight]
-                    # Now filter the objects using the combined list of names
-                    quater_finalists = objects.filter(obj_name__in=quater_finalists_names)
-                    semi_finalists = objects.filter(obj_name__in=semi_finalists_names)
-                    finalists = objects.filter(obj_name__in=finalists_names)
-                    one_eights = objects.filter(obj_name__in=one_eights_names)
-
-                    winners = objects.filter(obj_name__in=quater_winners)
-                    winners_semi = objects.filter(obj_name__in=semi_winners)
-                    winners_finalists = objects.filter(obj_name__in=winner_finalists)
-                    if objects.filter(current_stage = 'winner_winner').exists(): winner_winner = objects.get(current_stage = 'winner_winner')
-                    group = current_group
-        else:
+        else: # For 4, 8, 16 participant brackets
+            # These variables are constructed from the full lists gathered in step 3
             finalists = objects.filter(obj_name__in=final)
             semi_finalists = objects.filter(obj_name__in=semi_final)
             quater_finalists = objects.filter(obj_name__in=quater_final)
             one_eights = objects.filter(obj_name__in=one_eight)
-            if objects.filter(current_stage = 'winner').exists(): winner = objects.get(current_stage = 'winner')
-            print(winner)
+            
+            # Determine the single winner (Query 3 or 4, single object)
+            winner = objects.filter(current_stage='winner').first()
+
     except ObjectDoesNotExist:
         message = 'This bracket does not exist'
         return HttpResponseRedirect(f'/error/{message}')
