@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 import re
+from django.db import transaction
 # Create your views here.
 def index(request):
     brackets = Bracket.objects.all()
@@ -391,6 +392,11 @@ def bracket_view(request, id):
         # --- 4. Stage Progression/Correction Logic (Optimized for QuerySets) ---
 
         # Correction 1: Reset final_winner if count is wrong
+        # ... (Lines 1 through 151 remain the same as the previous optimized function) ...
+
+        # --- 4. Stage Progression/Correction Logic (Optimized for QuerySets) ---
+
+        # Correction 1: Reset final_winner if count is wrong
         if len(winner_finalists) < 2 and len(winner_finalists) > 0:
             # Get objects that match the winner names and reset their stage fields
             objects.filter(obj_name__in=winner_finalists).update(current_stage='final')
@@ -406,23 +412,36 @@ def bracket_view(request, id):
                 semi_winners.clear()
         
         # Progression 1: Quater-final to 1/8 (if count is low)
-        # Note: Check changed from >= 1 and < 8 to just < 8 (as >= 1 is implicit if the list is non-empty)
+        # Required for next round (Semi-Final) is 4 winners. If we have 1-7, we reset.
         if len(quater_final) > 0 and len(quater_final) < 8:
+            # 1. Update Bracket_object (current_stage back one round)
             objects.filter(obj_name__in=quater_final).update(current_stage='1/8')
+            # 2. Update Participant_stages (reset the flag)
             Participant_stages.objects.filter(obj_name__obj_name__in=quater_final, user=user).update(quater_final=False)
+            # 3. Clear the Python list
             quater_final.clear()
 
         # Progression 2: Semi-final to Quater-final (if count is low)
+        # Required for next round (Final) is 2 winners. If we have 1-3, we reset.
         if len(semi_final) > 0 and len(semi_final) < 4:
+            # 1. Update Bracket_object (current_stage back one round)
             objects.filter(obj_name__in=semi_final).update(current_stage='quater_final')
+            # 2. Update Participant_stages (reset the flag)
             Participant_stages.objects.filter(obj_name__obj_name__in=semi_final, user=user).update(semi_final=False)
+            # 3. Clear the Python list
             semi_final.clear()
             
         # Progression 3: Final to Semi-final (if count is low)
+        # Required for next round (Winner) is 1 winner. If we have 1, we reset.
         if len(final) > 0 and len(final) < 2:
+            # 1. Update Bracket_object (current_stage back one round)
             objects.filter(obj_name__in=final).update(current_stage='semi_final')
+            # 2. Update Participant_stages (reset the flag)
             Participant_stages.objects.filter(obj_name__obj_name__in=final, user=user).update(final=False)
-            final.clear()
+            # 3. Clear the Python list
+            final.clear() 
+
+# ... (The rest of the function for group filtering and return statements remains the same) ...
 
         # --- 5. Group Filtering Logic (32/128 Participants) ---
         
